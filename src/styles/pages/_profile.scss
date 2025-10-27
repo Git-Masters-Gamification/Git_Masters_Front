@@ -1,0 +1,369 @@
+// src/styles/pages/_profile.scss
+// ======================================================
+// PROFILE PAGE — actualización visual: oscuro, neón, gamificado
+// ======================================================
+
+@use "sass:color";
+@use "../base/variables" as *;
+@use "../base/mixins" as *;
+
+// Layout grid: left (activity/history) + center (main)
+.profile {
+  background: $color-ui-bg;
+  color: $color-ui-text;
+  font-family: $font-family-base;
+  padding: 2.5rem;
+  min-height: 100vh;
+
+  @include respond('md') { padding: 3.5rem; }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    .profile__title {
+      font-size: 2.25rem;
+      color: $color-brand-primary;
+      font-weight: $font-weight-extrabold;
+      text-shadow: 0 0 18px rgba(0,191,255,0.28);
+      margin-bottom: 0.25rem;
+    }
+
+    .profile__subtitle {
+      color: $color-ui-muted;
+      font-size: 0.95rem;
+    }
+  }
+
+  // Grid
+  &__grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 2rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Panels used on left column and bio
+  &__panel {
+    background: $color-ui-surface;
+    border: 1px solid $border-color;
+    border-radius: $size-radius-md;
+    padding: 1rem;
+    box-shadow: $size-shadow-card;
+  }
+
+  &__col {
+    &--left {
+      .profile__panel + .profile__panel {
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  /* Main card */
+  &__card {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background: linear-gradient(
+      180deg,
+      color.scale($color-ui-surface, $lightness: -2%),
+      $color-ui-surface 60%
+    );
+    border: 1px solid $border-color;
+    border-radius: $size-radius-lg;
+    padding: 1.25rem;
+    box-shadow: $size-shadow-card;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    .profile__avatar-wrap {
+      flex: 0 0 auto;
+      width: 96px;
+      height: 96px;
+      padding: 6px;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 191, 255, 0.06),
+        rgba(41, 199, 255, 0.03)
+      );
+      border-radius: $size-radius-lg;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile__avatar {
+      width: 84px;
+      height: 84px;
+      border-radius: 999px;
+      border: 2px solid rgba(0, 191, 255, 0.14);
+      background: $color-ui-bg;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile__body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .profile__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+
+      .profile__username {
+        font-size: 1.15rem;
+        font-weight: $font-weight-bold;
+        color: $color-ui-text;
+      }
+
+      .profile__email {
+        color: $color-ui-muted;
+        font-size: 0.9rem;
+      }
+
+      .profile__badges-inline {
+        display: flex;
+        gap: 0.4rem;
+
+        .badge {
+          width: 28px;
+          height: 28px;
+          border-radius: 6px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+          border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+      }
+    }
+
+    .profile__meta-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 4px;
+
+      .meta-pill {
+        padding: 0.35rem 0.6rem;
+        border-radius: $size-radius-md;
+        background: color.scale($color-ui-surface, $lightness: -4%);
+        color: $color-ui-muted;
+        border: 1px solid color.scale($border-color, $lightness: -6%);
+        font-size: 0.88rem;
+      }
+
+      .meta-xp {
+        color: $color-brand-primary;
+        font-weight: $font-weight-medium;
+      }
+
+      .meta-level {
+        color: $color-ui-text;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+
+  /* XP progress bar */
+  .xp-bar {
+    margin-top: 0.9rem;
+
+    &__track {
+      height: 10px;
+      background: linear-gradient(
+        90deg,
+        color.scale($color-ui-surface, $lightness: -8%),
+        color.scale($color-ui-surface, $lightness: -12%)
+      );
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+    }
+
+    &__fill {
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        $color-brand-primary,
+        $color-brand-primary-hover
+      );
+      box-shadow: 0 4px 18px rgba(0, 191, 255, 0.18);
+      transition: width 0.45s cubic-bezier(0.2, 0.9, 0.3, 1);
+      width: 0%;
+    }
+
+    &__legend {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.45rem;
+      font-size: 0.85rem;
+      color: $color-ui-muted;
+    }
+  }
+
+  /* Bio panel (larger / centered) */
+  .profile__panel--bio {
+    margin-top: 1rem;
+    padding: 1rem;
+    text-align: left;
+
+    .profile__section-title {
+      color: $color-brand-primary;
+      font-weight: $font-weight-medium;
+      margin-bottom: 0.7rem;
+    }
+
+    .profile__bio-text {
+      color: $color-ui-muted;
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile__textarea {
+      width: 100%;
+      min-height: 96px;
+      padding: 0.8rem;
+      border-radius: $size-radius-md;
+      border: 1px solid $border-color;
+      background: $color-ui-bg;
+      color: $color-ui-text;
+      font-family: $font-family-base;
+      resize: vertical;
+    }
+
+    .profile__actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+    }
+  }
+
+  // Lists and items (left column)
+  .profile__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .profile__item {
+    padding: 0.6rem 0.75rem;
+    border-radius: $size-radius-md;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: color.scale($color-ui-surface, $lightness: -2%);
+    border: 1px solid color.scale($border-color, $lightness: -8%);
+    font-size: 0.92rem;
+  }
+
+  .profile__empty {
+    color: $color-ui-muted;
+    padding: 0.4rem 0.6rem;
+  }
+
+  /* Footer */
+  &__footer {
+    margin-top: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  /* Buttons (re-usable small classes) */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: $size-radius-md;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    line-height: 1;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  }
+
+  .btn--primary {
+    background: linear-gradient(90deg, $color-brand-primary, $color-brand-primary-hover);
+    color: $color-ui-surface;
+    box-shadow: 0 6px 20px rgba(0, 191, 255, 0.12);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: $color-brand-primary;
+    border: 1px solid color.scale($color-brand-primary, $lightness: -34%);
+  }
+
+  .btn--secondary {
+    background: transparent;
+    color: $color-ui-muted;
+    border: 1px solid $border-color;
+  }
+
+  .btn--link {
+    background: transparent;
+    color: $color-brand-primary;
+    padding: 0.15rem 0.35rem;
+  }
+
+  /* Estilo actualizado para el botón de cerrar sesión */
+  .btn--danger {
+    background: linear-gradient(90deg, #4b0082, #00bfff);
+    color: $color-ui-surface;
+    box-shadow: 0 6px 20px rgba(75, 0, 130, 0.3);
+  }
+
+  /* small utilities */
+  .center {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .small {
+    font-size: 0.85rem;
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .profile {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .profile__card {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .profile__avatar-wrap {
+      display: none;
+    }
+  }
+}

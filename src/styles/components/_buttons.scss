@@ -1,0 +1,85 @@
+@use 'sass:color';
+@use '../base/variables' as *;
+
+/* =========================================================
+   🎨 BUTTON COMPONENT
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  border-radius: $size-radius-sm;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  text-align: center;
+  transition: all 0.2s ease;
+
+  &--primary {
+    background: $color-brand-primary;
+    color: #fff;
+
+    &:hover {
+      background: color.adjust($color-brand-primary, $lightness: -8%);
+    }
+  }
+
+  &--secondary {
+    background: $color-ui-muted;
+    color: #fff;
+
+    &:hover {
+      background: color.adjust($color-ui-muted, $lightness: -8%);
+    }
+  }
+
+  &--danger {
+    background: $color-semantic-danger;
+    color: #fff;
+
+    &:hover {
+      background: color.adjust($color-semantic-danger, $lightness: -10%);
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    border: 2px solid $color-brand-primary;
+    color: $color-brand-primary;
+
+    &:hover {
+      background: rgba($color-brand-primary, 0.08);
+    }
+  }
+
+  &--disabled,
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+/* 🌙 DARK MODE */
+.theme--dark .btn {
+  &--primary {
+    background: color.adjust($color-brand-primary, $lightness: 8%);
+  }
+
+  &--secondary {
+    background: color.adjust($color-ui-muted, $lightness: 10%);
+  }
+
+  &--danger {
+    background: color.adjust($color-semantic-danger, $lightness: 10%);
+  }
+
+  &--outline {
+    border-color: color.adjust($color-brand-primary, $lightness: 12%);
+    color: color.adjust($color-brand-primary, $lightness: 12%);
+  }
+}

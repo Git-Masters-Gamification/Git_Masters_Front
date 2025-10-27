@@ -1,0 +1,133 @@
+// ======================================
+// 🎨 BASE: _mixins.scss
+// --------------------------------------
+// Contiene mixins globales reutilizables
+// para layout, tipografía, breakpoints y utilidades.
+// ======================================
+
+@use 'sass:map';
+
+// --------------------------------------
+// 🔹 BREAKPOINTS (basado en tokens si existen)
+// --------------------------------------
+$breakpoints: (
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px
+);
+
+/// Media query mixin — uso: @include respond('md') { ... }
+@mixin respond($bp) {
+  $size: map.get($breakpoints, $bp);
+  @if $size {
+    @media (min-width: $size) {
+      @content;
+    }
+  } @else {
+    @warn "⚠️ Breakpoint `#{$bp}` not found in $breakpoints map.";
+  }
+}
+
+// --------------------------------------
+// 🔹 FLEXBOX HELPERS
+// --------------------------------------
+
+/// Centrado completo con flexbox
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/// Flex con espacio entre elementos
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/// Columna centrada
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// --------------------------------------
+// 🔹 VISUAL & TEXT HELPERS
+// --------------------------------------
+
+/// Ocultar visualmente (pero accesible)
+@mixin visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/// Truncar texto a N líneas
+/// @param {Number} $lines - número de líneas (default: 1)
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// --------------------------------------
+// 🔹 SHADOWS & EFFECTS
+// --------------------------------------
+
+/// Sombra leve (usa variables si están definidas)
+@mixin shadow-sm {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/// Sombra media
+@mixin shadow-md {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/// Sombra intensa
+@mixin shadow-lg {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+// --------------------------------------
+// 🔹 TRANSITIONS / ANIMATIONS
+// --------------------------------------
+
+/// Transición base para hover y estados
+@mixin transition-base($property: all, $duration: 0.25s, $ease: ease-in-out) {
+  transition: $property $duration $ease;
+}
+
+/// Hover con elevación (combinable)
+@mixin hover-elevate {
+  @include transition-base(transform, 0.2s);
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// --------------------------------------
+// 🔹 CONTAINER WRAPPER (opcional)
+// --------------------------------------
+
+/// Contenedor centrado con máximo ancho
+@mixin container($max: 1200px) {
+  width: 100%;
+  max-width: $max;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}

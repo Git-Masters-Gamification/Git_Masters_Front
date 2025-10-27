@@ -1,0 +1,265 @@
+// src/styles/pages/_login.scss
+// ======================================================
+// LOGIN PAGE STYLES — Fondo "lámpara de lava" sutil
+// ======================================================
+
+@use "sass:color";
+@use "../base/variables" as vars;
+@use "../tokens/build/scss/tokens" as tokens;
+
+// === Ajustes locales ===
+$card-radius: tokens.$radius-md !default;
+$card-padding: tokens.$size-spacing-5 !default;
+$max-width-card: 420px !default;
+$logo-size: 96px !default;
+
+// ======================================================
+// ESTRUCTURA PRINCIPAL
+// ======================================================
+.login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: tokens.$size-spacing-4;
+  position: relative;
+  overflow: hidden;
+  font-family: vars.$font-family-base;
+  color: tokens.$color-ui-text;
+
+  /* Base: texturas + degradado (capa estática) */
+  background:
+    radial-gradient(circle at 20% 20%, rgba(tokens.$color-brand-primary, 0.05), transparent 25%),
+    radial-gradient(circle at 80% 80%, rgba(tokens.$color-brand-accent, 0.03), transparent 25%),
+    linear-gradient(
+      180deg,
+      tokens.$color-ui-bg 0%,
+      color.adjust(tokens.$color-ui-bg, $lightness: 3%) 100%
+    );
+
+  /* ------------------------------------------------------------------
+     Capa 1: glow/blur (pseudo ::before) - "halo" suave que flota
+     ------------------------------------------------------------------ */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -25% -10%;
+    background-image:
+      radial-gradient(closest-side, rgba(tokens.$color-brand-primary, 0.09), transparent 28%),
+      radial-gradient(closest-side, rgba(tokens.$color-brand-accent, 0.06), transparent 20%);
+    filter: blur(36px);
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform, opacity;
+    animation: floatBg 12s ease-in-out infinite;
+    opacity: 0.95;
+  }
+
+  @keyframes floatBg {
+    0%   { transform: translateY(0px) scale(1); opacity: 0.88; }
+    33%  { transform: translateY(-8px) scale(1.02); opacity: 1; }
+    66%  { transform: translateY(6px) scale(0.99); opacity: 0.95; }
+    100% { transform: translateY(0px) scale(1); opacity: 0.88; }
+  }
+
+  /* ------------------------------------------------------------------
+     Capa 2: "lava" orgánica (pseudo ::after)
+     - múltiples radial-gradients superpuestos
+     - animamos background-position y background-size para sensación de blobs que se mueven/estrescan
+     - blur + mix-blend-mode para suavizar/y fundir las formas
+     ------------------------------------------------------------------ */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -50% -50%;
+    pointer-events: none;
+    z-index: 0;
+    will-change: background-position, background-size, transform, opacity;
+
+    /* 3 blobs principales (dos tonos + un halo secundario) */
+    background-image:
+      radial-gradient(circle at 20% 35%, rgba(tokens.$color-brand-primary, 0.20) 0%, rgba(tokens.$color-brand-primary, 0.16) 18%, transparent 40%),
+      radial-gradient(circle at 70% 60%, rgba(tokens.$color-brand-accent, 0.14) 0%, rgba(tokens.$color-brand-accent, 0.10) 22%, transparent 46%),
+      radial-gradient(circle at 45% 75%, rgba(tokens.$color-brand-primary, 0.10) 0%, rgba(tokens.$color-brand-primary, 0.06) 28%, transparent 56%);
+    background-size: 40% 40%, 38% 38%, 48% 48%;
+    background-position: 10% 40%, 80% 60%, 46% 80%;
+    filter: blur(28px) saturate(1.05);
+    opacity: 0.9;
+    mix-blend-mode: screen;
+
+    /* movimiento tipo "lava": posiciones y escalas animadas */
+    animation: lavaMove 18s ease-in-out infinite;
+  }
+
+  /* animación principal que desplaza y escala "blobs" */
+  @keyframes lavaMove {
+    0% {
+      background-position: 8% 42%, 82% 58%, 46% 80%;
+      background-size: 42% 42%, 36% 36%, 50% 50%;
+      transform: translateZ(0) rotate(0deg) scale(1);
+      opacity: 0.88;
+    }
+    25% {
+      background-position: 14% 36%, 76% 64%, 40% 72%;
+      background-size: 48% 44%, 34% 34%, 46% 46%;
+      transform: rotate(.08deg) scale(1.01);
+      opacity: 0.94;
+    }
+    50% {
+      background-position: 20% 44%, 70% 50%, 52% 78%;
+      background-size: 40% 46%, 38% 38%, 54% 52%;
+      transform: rotate(-.05deg) scale(1);
+      opacity: 0.9;
+    }
+    75% {
+      background-position: 12% 48%, 84% 56%, 48% 86%;
+      background-size: 44% 40%, 40% 36%, 46% 48%;
+      transform: rotate(.03deg) scale(1.005);
+      opacity: 0.92;
+    }
+    100% {
+      background-position: 8% 42%, 82% 58%, 46% 80%;
+      background-size: 42% 42%, 36% 36%, 50% 50%;
+      transform: rotate(0deg) scale(1);
+      opacity: 0.88;
+    }
+  }
+
+  /* Preferencias de accesibilidad: eliminar movimiento si el usuario lo pide */
+  @media (prefers-reduced-motion: reduce) {
+    &::before,
+    &::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  // ======================================================
+  // TARJETA CENTRAL
+  // ======================================================
+  &__container {
+    z-index: 2;
+    width: 100%;
+    max-width: $max-width-card;
+    background: tokens.$color-ui-surface;
+    border-radius: $card-radius;
+    /* más espacio superior para que el logo respire */
+    padding: calc($card-padding + tokens.$size-spacing-2) $card-padding $card-padding;
+    box-shadow: tokens.$size-shadow-card;
+    border: 1px solid rgba(tokens.$color-ui-border, 0.06);
+    text-align: center;
+    transition: transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.22s ease;
+    will-change: transform, box-shadow;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(4, 79, 228, 0.12), tokens.$size-shadow-glow;
+    }
+  }
+
+  // ======================================================
+  // LOGO (pulso sutil)
+  // ======================================================
+  &__logo {
+    display: block;                 /* para que se centre con margin auto */
+    margin: 0 auto tokens.$size-spacing-4;
+    width: $logo-size;
+    height: $logo-size;
+    object-fit: cover;
+    border-radius: tokens.$radius-md;
+    background-color: color.adjust(tokens.$color-ui-surface, $lightness: 3%);
+    padding: tokens.$size-spacing-2;
+    box-shadow: 0 10px 28px rgba(2,6,23,0.35);
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    will-change: transform, box-shadow;
+    animation: logoPulse 6s ease-in-out infinite;
+
+    &:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 18px 48px rgba(tokens.$color-brand-primary, 0.12);
+    }
+  }
+
+  @keyframes logoPulse {
+    0%   { box-shadow: 0 8px 22px rgba(2,6,23,0.28); transform: translateY(0); }
+    50%  { box-shadow: 0 14px 36px rgba(tokens.$color-brand-primary, 0.10); transform: translateY(-2px); }
+    100% { box-shadow: 0 8px 22px rgba(2,6,23,0.28); transform: translateY(0); }
+  }
+
+  // ======================================================
+  // TITULOS Y SUBTITULOS
+  // ======================================================
+  &__title {
+    font-size: tokens.$font-size-xl;
+    font-weight: tokens.$font-weight-extrabold;
+    margin: 0 0 tokens.$size-spacing-2 0;
+    color: tokens.$color-brand-primary;
+    text-shadow: 0 6px 18px rgba(tokens.$color-brand-primary, 0.06);
+  }
+
+  &__subtitle {
+    font-size: tokens.$font-size-base;
+    color: tokens.$color-ui-muted;
+    margin-bottom: tokens.$size-spacing-4;
+  }
+
+  // ======================================================
+  // BOTÓN PRINCIPAL
+  // ======================================================
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: tokens.$radius-sm;
+    font-weight: tokens.$font-weight-medium;
+    font-size: tokens.$font-size-base;
+    cursor: pointer;
+    border: none;
+    background: linear-gradient(90deg, tokens.$color-brand-primary, tokens.$color-brand-primary-hover);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08), 0 0 18px rgba(tokens.$color-brand-primary, 0.06);
+    transition: transform 0.12s ease, box-shadow 0.18s ease, opacity 0.12s ease;
+    will-change: transform, box-shadow;
+
+    &:hover,
+    &:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(16, 24, 40, 0.12), 0 0 28px rgba(tokens.$color-brand-primary, 0.12);
+      outline: none;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 24px rgba(16, 24, 40, 0.1);
+    }
+
+    .login__icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      color: inherit;
+    }
+  }
+
+  // ======================================================
+  // Responsivo
+  // ======================================================
+  @media (max-width: vars.$breakpoint-md) {
+    &__container {
+      padding: tokens.$size-spacing-5;
+      margin: 0 1rem;
+    }
+
+    &__logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: tokens.$size-spacing-3;
+    }
+
+    &__title {
+      font-size: calc(#{tokens.$font-size-xl} - 6px);
+    }
+  }
+}

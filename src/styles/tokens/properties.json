@@ -1,0 +1,67 @@
+{
+  "color": {
+    "brand": {
+      "primary": { "value": "#00BFFF" },
+      "primary-hover": { "value": "#29C7FF" },
+      "primary-active": { "value": "#0090C1" },
+      "accent": { "value": "#FF7A59" }
+    },
+    "ui": {
+      "bg": { "value": "#FAFAFB" },
+      "surface": { "value": "#FFFFFF" },
+      "muted": { "value": "#6B7280" },
+      "text": { "value": "#0F172A" },
+      "border": { "value": "#E5E7EB" },
+      "glow": { "value": "rgba(0,191,255,0.25)" }
+    },
+    "semantic": {
+      "success": { "value": "#10B981" },
+      "warning": { "value": "#F59E0B" },
+      "danger": { "value": "#EF4444" },
+      "info": { "value": "#3B82F6" }
+    }
+  },
+  "size": {
+    "radius": {
+      "sm": { "value": "6px" },
+      "md": { "value": "12px" },
+      "lg": { "value": "16px" },
+      "xl": { "value": "20px" }
+    },
+    "spacing": {
+      "1": { "value": "4px" },
+      "2": { "value": "8px" },
+      "3": { "value": "12px" },
+      "4": { "value": "16px" },
+      "5": { "value": "24px" },
+      "6": { "value": "32px" }
+    },
+    "shadow": {
+      "glow": { "value": "0 0 10px rgba(0,191,255,0.15)" },
+      "card": { "value": "0 6px 18px rgba(16,24,40,0.06)" }
+    }
+  },
+  "font": {
+    "family": {
+      "base": { "value": "'Poppins', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" }
+    },
+    "size": {
+      "sm": { "value": "13px" },
+      "base": { "value": "16px" },
+      "lg": { "value": "20px" },
+      "xl": { "value": "32px" }
+    },
+    "weight": {
+      "regular": { "value": "400" },
+      "medium": { "value": "500" },
+      "bold": { "value": "700" },
+      "extrabold": { "value": "800" }
+    }
+  },
+  "breakpoint": {
+    "sm": { "value": "640px" },
+    "md": { "value": "768px" },
+    "lg": { "value": "1024px" },
+    "xl": { "value": "1280px" }
+  }
+}

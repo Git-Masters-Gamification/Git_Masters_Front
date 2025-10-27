@@ -1,0 +1,98 @@
+@use '../base/variables' as *;
+@use 'sass:color';
+
+.rankings {
+  padding: 1rem;
+
+  &__title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  &__filters {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  &__input,
+  &__select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  &__button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: color.adjust($primary, $lightness: -5%);
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background: color.adjust($primary, $lightness: 5%);
+    }
+  }
+
+  &__table-wrapper {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background: #f8f8f8;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background: #f9f9f9;
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  &__page-info {
+    font-weight: 500;
+  }
+
+  &__total {
+    margin-left: auto;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  &__error {
+    color: red;
+  }
+
+  &__empty {
+    color: #555;
+    font-style: italic;
+  }
+}

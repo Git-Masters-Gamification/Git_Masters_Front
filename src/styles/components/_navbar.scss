@@ -1,0 +1,205 @@
+@use '../base/variables' as *;
+
+/* =========================================================
+   🧭 NAVBAR COMPONENT
+   ========================================================= */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $color-ui-surface;
+  border-bottom: 1px solid rgba($color-ui-text, 0.1);
+  padding: 0.75rem 1rem;
+  font-family: $font-family-base;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+  &__brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $color-ui-text;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $color-brand-primary;
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    a {
+      color: $color-ui-text;
+      font-weight: 500;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $color-brand-primary;
+      }
+    }
+
+    &.is-open {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: $color-ui-text;
+    cursor: pointer;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &-avatar img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+    }
+
+    &-name {
+      font-weight: 500;
+      color: $color-ui-text;
+    }
+
+    &-logout {
+      border: 1px solid rgba($color-ui-text, 0.2);
+      border-radius: $size-radius-sm;
+      padding: 0.25rem 0.5rem;
+      background: transparent;
+      color: $color-ui-text;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+
+      &:hover {
+        background: rgba($color-ui-muted, 0.08);
+        color: $color-brand-primary;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__toggle {
+      display: block;
+    }
+
+    &__links {
+      display: none;
+
+      &.is-open {
+        display: flex;
+        position: absolute;
+        top: 3.5rem;
+        left: 0;
+        width: 100%;
+        background: $color-ui-surface;
+        border-top: 1px solid rgba($color-ui-text, 0.1);
+        padding: 1rem 0.5rem;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+}
+
+/* =========================================================
+   🌙 DARK MODE
+   ========================================================= */
+.theme--dark .navbar {
+  background: #0d1117; // Fondo oscuro profundo
+  border-color: rgba(255, 255, 255, 0.1);
+
+  a {
+    color: #f8fafc;
+  }
+
+  .navbar__brand {
+    color: #38bdf8; // Azul neón
+  }
+
+  .navbar__toggle {
+    color: #f8fafc;
+  }
+
+  .navbar__user-name {
+    color: #f8fafc;
+  }
+
+  .navbar__user-logout {
+    color: #f8fafc;
+    border-color: rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      background: rgba(56, 189, 248, 0.1);
+      color: #38bdf8;
+    }
+  }
+
+  .navbar__links.is-open {
+    background: #111827; // tono más claro que el fondo principal
+  }
+}
+
+/* =========================================================
+   ☀️ LIGHT MODE
+   ========================================================= */
+.theme--light .navbar {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.05);
+
+  a {
+    color: #111827;
+  }
+
+  .navbar__brand {
+    color: #2563eb; // Azul principal claro
+  }
+
+  .navbar__toggle {
+    color: #111827;
+  }
+
+  .navbar__user-name {
+    color: #111827;
+  }
+
+  .navbar__user-logout {
+    color: #111827;
+    border-color: rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: rgba(37, 99, 235, 0.1);
+      color: #2563eb;
+    }
+  }
+
+  .navbar__links.is-open {
+    background: #f9fafb;
+  }
+}
+
+/* =========================================================
+   VARIABLES COMPLEMENTARIAS (no definidas en tokens)
+   ========================================================= */
+
+// Fondo de superficie UI (tarjetas, navbar, modales, etc.)
+$color-ui-surface: #ffffff !default;
+$color-ui-muted: #6c757d !default;
+
+// Fuente base global
+$font-family-base: 'Inter', 'Segoe UI', Roboto, sans-serif !default;
+
+// Tamaños base
+$size-radius-sm: 4px !default;
+$size-radius-md: 8px !default;
+$size-radius-lg: 12px !default;

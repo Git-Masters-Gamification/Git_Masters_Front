@@ -1,0 +1,140 @@
+// src/styles/base/_variables.scss
+// -> Mapea los tokens generados (Style Dictionary) a nombres "amigables"
+// -> Usar `!default` permite sobreescribir desde otros archivos si hace falta.
+
+@use '../tokens/build/scss/_tokens' as tokens;
+
+// ----------------------
+// Tokens (directos)
+// ----------------------
+$color-brand-primary:             tokens.$color-brand-primary !default;
+$color-brand-primary-hover:       tokens.$color-brand-primary-hover !default; // hover token directo
+$color-brand-primary-active:      tokens.$color-brand-primary-active !default;
+$color-brand-primary-600:         tokens.$color-brand-primary-600 !default;
+$color-brand-accent:              tokens.$color-brand-accent !default;
+
+$color-ui-bg:                     tokens.$color-ui-bg !default;
+$color-ui-surface:                tokens.$color-ui-surface !default;
+$color-ui-muted:                  tokens.$color-ui-muted !default;
+$color-ui-text:                   tokens.$color-ui-text !default;
+$color-ui-border:                 tokens.$color-ui-border !default; // añadido
+$color-ui-glow:                   tokens.$color-ui-glow !default;
+
+$color-semantic-success:          tokens.$color-semantic-success !default;
+$color-semantic-warning:          tokens.$color-semantic-warning !default;
+$color-semantic-danger:           tokens.$color-semantic-danger !default;
+$color-semantic-info:             tokens.$color-semantic-info !default;
+
+$size-radius-sm:                  tokens.$size-radius-sm !default;
+$size-radius-md:                  tokens.$size-radius-md !default;
+$size-radius-lg:                  tokens.$size-radius-lg !default;
+$size-radius-xl:                  tokens.$size-radius-xl !default;
+
+$size-spacing-1:                  tokens.$size-spacing-1 !default;
+$size-spacing-2:                  tokens.$size-spacing-2 !default;
+$size-spacing-3:                  tokens.$size-spacing-3 !default;
+$size-spacing-4:                  tokens.$size-spacing-4 !default;
+$size-spacing-5:                  tokens.$size-spacing-5 !default;
+$size-spacing-6:                  tokens.$size-spacing-6 !default;
+
+$size-shadow-glow:                tokens.$size-shadow-glow !default; // añadido
+$size-shadow-card:                tokens.$size-shadow-card !default; // añadido
+
+$font-family-base:                tokens.$font-family-base !default;
+$font-size-sm:                    tokens.$font-size-sm !default;
+$font-size-base:                  tokens.$font-size-base !default;
+$font-size-lg:                    tokens.$font-size-lg !default;
+$font-size-xl:                    tokens.$font-size-xl !default;
+
+$font-weight-regular:             tokens.$font-weight-regular !default;
+$font-weight-medium:              tokens.$font-weight-medium !default;
+$font-weight-bold:                tokens.$font-weight-bold !default;
+$font-weight-extrabold:           tokens.$font-weight-extrabold !default;
+
+$breakpoint-sm:                   tokens.$breakpoint-sm !default;
+$breakpoint-md:                   tokens.$breakpoint-md !default;
+$breakpoint-lg:                   tokens.$breakpoint-lg !default;
+$breakpoint-xl:                   tokens.$breakpoint-xl !default;
+
+// ----------------------
+// Aliases / nombres usados por los partials existentes
+// ----------------------
+$color-primary:   $color-brand-primary !default;
+$primary:         $color-primary !default;
+$color-accent:    $color-brand-accent !default;
+
+$color-bg:        $color-ui-bg !default;
+$card-bg:         $color-ui-surface !default;
+$color-text:      $color-ui-text !default;
+$color-muted:     $color-ui-muted !default;
+$color-ui-border: $color-ui-border !default; // preserve token name
+
+$color-success:   $color-semantic-success !default;
+$color-warning:   $color-semantic-warning !default;
+$color-danger:    $color-semantic-danger !default;
+
+$radius-sm:       $size-radius-sm !default;
+$radius-md:       $size-radius-md !default;
+$radius-lg:       $size-radius-lg !default;
+
+/* ============================
+   Compatibilidad / Alias
+   Mapear nombres esperados por componentes a las variables actuales
+   ============================ */
+
+/* Colores UI / brand */
+$color-brand-primary:       $primary !default;
+$color-brand-primary-600:   $color-brand-primary-600 !default;
+$primary-hover:             $color-brand-primary-hover !default; // hover alias
+$color-brand-accent:        $color-accent !default;
+
+/* UI surface / text */
+$color-ui-bg:       $color-bg !default;
+$color-ui-surface:  $card-bg !default;
+$color-ui-text:     $color-text !default;
+$color-ui-muted:    $color-muted !default;
+$color-ui-border:   $color-ui-border !default;
+
+/* Semantic (éxito / warning / danger) */
+$color-semantic-success: $color-success !default;
+$color-semantic-warning: $color-warning !default;
+$color-semantic-danger:  $color-danger !default;
+
+/* Radius / sizes */
+$size-radius-sm: $radius-sm !default;
+$size-radius-md: $radius-md !default;
+$size-radius-lg: $radius-lg !default;
+
+/* Shadows (expuestos con nombres usados por partials) */
+$size-shadow-glow: $size-shadow-glow !default; // neon glow
+$size-shadow-card: $size-shadow-card !default;
+
+/* Tipografía */
+$font-family-base: $font-family-base !default;
+$font-size-base:   $font-size-base !default;
+$font-weight-bold: $font-weight-bold !default;
+
+/* ============================
+   Compatibilidad — nombres históricos / shortcuts
+   (mapear nombres que usan los partials antiguos)
+   ============================ */
+
+// colores y texto
+$text: $color-text !default;
+$text-primary: $text !default;
+$text-muted: $color-muted !default;
+
+// backgrounds / surfaces
+$bg: $color-bg !default;
+$surface: $card-bg !default;
+
+// accent / primary hover
+$accent: $color-accent !default;
+$primary-hover: $primary-hover !default;
+
+// Error / danger alias
+$error-color: $color-semantic-danger !default;
+$error: $error-color !default;
+
+/* Border default (fix temporal) */
+$border-color: $color-ui-border !default;

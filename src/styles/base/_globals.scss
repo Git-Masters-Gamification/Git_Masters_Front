@@ -1,0 +1,29 @@
+// =============================
+// 🌍 ESTILOS GLOBALES (BASE)
+// =============================
+
+@use 'variables' as *;
+
+body {
+  background-color: $color-ui-bg;
+  color: $color-ui-text;
+  font-family: $font-family-base;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: $color-ui-surface;
+    color: $color-ui-text;
+  }
+}
+
+// Layout global
+.container {
+  width: min(90%, 1200px);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: $size-spacing-5;
+}

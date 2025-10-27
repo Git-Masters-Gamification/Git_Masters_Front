@@ -1,0 +1,173 @@
+// src/styles/pages/_dashboard.scss
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+// ===========================
+// DASHBOARD (Ajustado a tokens existentes)
+// ===========================
+
+.dashboard {
+  padding: 2rem;
+  color: $color-ui-text; // ← variable existente
+  font-family: $font-family-base;
+
+  &__header {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    .dashboard__title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $color-brand-primary; // ← tu brand token
+      text-shadow: 0 0 12px rgba(0, 191, 255, 0.4);
+    }
+
+    .dashboard__subtitle {
+      color: $color-ui-muted;
+      font-size: 1rem;
+      margin-top: 0.25rem;
+    }
+  }
+
+  // === Resumen superior (XP Stats) ===
+  &__summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+
+    .dashboard__item {
+      background: $color-ui-surface;
+      border: 1px solid $border-color;
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      flex: 1 1 200px;
+      text-align: center;
+      font-weight: 600;
+      color: $color-ui-text;
+      box-shadow: 0 0 8px rgba(0, 191, 255, 0.05);
+      transition: all 0.3s ease;
+
+      strong {
+        color: $color-brand-primary;
+        text-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
+      }
+
+      &:hover {
+        box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  // === Estadísticas recientes ===
+  &__stats {
+    background: $color-ui-surface;
+    border: 1px solid $border-color;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 12px rgba(0, 191, 255, 0.05);
+
+    &-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $color-brand-primary;
+      margin-bottom: 1rem;
+    }
+
+    &-content {
+      white-space: pre-wrap;
+      background: $color-ui-bg;
+      color: $color-ui-muted;
+      padding: 1rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(0, 191, 255, 0.12);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      box-shadow: inset 0 0 8px rgba(0, 191, 255, 0.06);
+    }
+  }
+
+  // === Navegación rápida ===
+  &__nav {
+    margin-bottom: 2.5rem;
+    text-align: center;
+
+    &-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $color-brand-primary;
+      margin-bottom: 1rem;
+    }
+
+    &-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+
+      .dashboard__nav-item {
+        a {
+          color: $color-brand-primary;
+          font-weight: 500;
+          text-decoration: none;
+          transition: all 0.25s ease;
+
+          &:hover {
+            color: $color-brand-primary; // kept same; brand hover token may not exist
+            text-shadow: 0 0 8px rgba(0, 191, 255, 0.4);
+          }
+        }
+      }
+    }
+  }
+
+  // === Botones / Acciones ===
+  &__actions {
+    text-align: center;
+
+    .dashboard__refresh-btn {
+      background: $color-brand-primary;
+      color: $color-ui-bg; // botón claro sobre azul
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(0, 191, 255, 0.3);
+      transition: all 0.25s ease;
+
+      &:hover {
+        // si tienes token brand-hover, úsalo. si no, se queda igual
+        background: $color-brand-primary;
+        box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+        transform: scale(1.03);
+      }
+
+      &:active {
+        background: $color-brand-primary;
+      }
+    }
+  }
+
+  // === Reintento (cuando hay error) ===
+  &__retry-btn {
+    background: $color-brand-primary;
+    color: $color-ui-bg;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+    transition: all 0.25s ease;
+
+    &:hover {
+      background: $color-brand-primary;
+      box-shadow: 0 0 18px rgba(0, 191, 255, 0.5);
+    }
+  }
+}

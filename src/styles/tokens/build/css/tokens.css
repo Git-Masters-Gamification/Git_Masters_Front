@@ -1,0 +1,45 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --color-brand-primary: #00BFFF;
+  --color-brand-primary-hover: #29C7FF;
+  --color-brand-primary-active: #0090C1;
+  --color-brand-accent: #FF7A59;
+  --color-ui-bg: #FAFAFB;
+  --color-ui-surface: #FFFFFF;
+  --color-ui-muted: #6B7280;
+  --color-ui-text: #0F172A;
+  --color-ui-border: #E5E7EB;
+  --color-ui-glow: rgba(0,191,255,0.25);
+  --color-semantic-success: #10B981;
+  --color-semantic-warning: #F59E0B;
+  --color-semantic-danger: #EF4444;
+  --color-semantic-info: #3B82F6;
+  --size-radius-sm: 6px;
+  --size-radius-md: 12px;
+  --size-radius-lg: 16px;
+  --size-radius-xl: 20px;
+  --size-spacing-1: 4px;
+  --size-spacing-2: 8px;
+  --size-spacing-3: 12px;
+  --size-spacing-4: 16px;
+  --size-spacing-5: 24px;
+  --size-spacing-6: 32px;
+  --size-shadow-glow: 0 0 10px rgba(0,191,255,0.15);
+  --size-shadow-card: 0 6px 18px rgba(16,24,40,0.06);
+  --font-family-base: 'Poppins', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-size-sm: 13px;
+  --font-size-base: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 32px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}

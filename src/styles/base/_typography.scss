@@ -1,0 +1,23 @@
+@use 'variables' as *;
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-regular;
+  color: $color-ui-text;
+  background-color: $color-ui-bg;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-bold;
+  color: $color-ui-text;
+}
+
+a {
+  color: $color-brand-primary;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

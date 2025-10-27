@@ -1,0 +1,50 @@
+@use '../base/variables' as *;
+
+/* =========================================================
+   🦶 FOOTER COMPONENT
+   ========================================================= */
+
+.footer {
+  width: 100%;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  font-family: $font-family-base;
+  border-top: 1px solid rgba($color-ui-text, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &__content {
+    font-size: 0.9rem;
+    color: $color-ui-muted;
+
+    span {
+      font-weight: 600;
+      color: $color-brand-primary;
+    }
+  }
+}
+
+/* =========================================================
+   ☀️ LIGHT MODE
+   ========================================================= */
+.theme--light .footer {
+  background: #f9fafb;
+  color: #374151;
+  border-color: rgba(0, 0, 0, 0.05);
+
+  .footer__content span {
+    color: #2563eb;
+  }
+}
+
+/* =========================================================
+   🌙 DARK MODE
+   ========================================================= */
+.theme--dark .footer {
+  background: #0d1117;
+  color: #e5e7eb;
+  border-color: rgba(255, 255, 255, 0.1);
+
+  .footer__content span {
+    color: #38bdf8;
+  }
+}

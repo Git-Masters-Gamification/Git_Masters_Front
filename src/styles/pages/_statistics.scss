@@ -1,0 +1,189 @@
+// ======================================================
+// 🎮 STATISTICS PAGE — Estilo Futurista + Gamificado
+// ======================================================
+//
+// Inspiración: Tron Legacy + Duolingo XP + Discord UI
+// Sensación: Energía, progreso, recompensa
+// Usa variables y tokens desde base/_variables.scss
+// ======================================================
+
+@use "../base/variables" as *;
+@use "../base/mixins" as *;
+
+.statistics {
+  padding: 2rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  color: $color-ui-text;
+  font-family: $font-family-base;
+  text-shadow: 0 0 4px rgba(0, 191, 255, 0.05);
+
+  // === Título principal ===
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: $font-weight-bold;
+    color: $color-brand-primary;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.5px;
+  }
+
+  // === Sección de resumen de puntos ===
+  &__summary {
+    background: $color-ui-surface;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 0 12px rgba(0, 191, 255, 0.1);
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 0 18px rgba(0, 191, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      color: $color-brand-primary;
+      font-weight: $font-weight-bold;
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+
+      .summary-item {
+        background: $color-ui-bg;
+        border: 1px solid rgba(0, 191, 255, 0.15);
+        border-radius: $radius-md;
+        text-align: center;
+        padding: 1rem 1.5rem;
+        transition: all 0.3s ease;
+        box-shadow: inset 0 0 6px rgba(0, 191, 255, 0.05);
+
+        &:hover {
+          border-color: rgba(0, 191, 255, 0.4);
+          box-shadow: 0 0 12px rgba(0, 191, 255, 0.2);
+        }
+
+        .summary-label {
+          font-size: 0.9rem;
+          color: $color-ui-muted;
+        }
+
+        .summary-value {
+          font-size: 1.75rem;
+          font-weight: $font-weight-bold;
+          color: $color-brand-primary;
+          text-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
+        }
+
+        .summary-sub {
+          font-size: 0.95rem;
+          color: $color-ui-muted;
+          margin-top: 0.25rem;
+        }
+      }
+    }
+  }
+
+  // === Desglose de actividades ===
+  &__breakdown {
+    background: $color-ui-surface;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.1);
+
+    h2 {
+      font-size: 1.3rem;
+      font-weight: $font-weight-bold;
+      color: $color-brand-primary;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: $color-ui-text;
+        font-size: 0.95rem;
+        transition: color 0.25s ease;
+
+        &:hover {
+          color: $color-brand-primary;
+        }
+
+        span:first-child {
+          text-transform: capitalize;
+          color: $color-ui-muted;
+        }
+
+        span:last-child {
+          font-weight: $font-weight-bold;
+          color: $color-ui-text;
+        }
+      }
+    }
+
+    // Estado sin datos
+    &--empty {
+      text-align: center;
+      color: $color-ui-muted;
+      padding: 2rem;
+      font-style: italic;
+    }
+  }
+
+  // === Debug / datos crudos ===
+  &__debug {
+    background: $color-ui-bg;
+    border: 1px solid rgba(0, 191, 255, 0.12);
+    border-radius: $radius-md;
+    padding: 1rem 1.25rem;
+    font-family: "JetBrains Mono", monospace;
+    color: $color-ui-muted;
+    font-size: 0.85rem;
+    box-shadow: inset 0 0 8px rgba(0, 191, 255, 0.08);
+
+    h2 {
+      color: $color-brand-primary;
+      font-weight: $font-weight-medium;
+      margin-bottom: 0.5rem;
+    }
+
+    pre {
+      background: $color-ui-surface;
+      border-radius: $radius-sm;
+      padding: 0.75rem;
+      overflow-x: auto;
+      border: 1px solid rgba(0, 191, 255, 0.08);
+    }
+  }
+
+  // === Adaptabilidad ===
+  @media (max-width: $breakpoint-md) {
+    padding: 1rem;
+
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__summary,
+    &__breakdown,
+    &__debug {
+      padding: 1rem;
+    }
+  }
+}

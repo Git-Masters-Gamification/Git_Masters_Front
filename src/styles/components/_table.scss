@@ -1,0 +1,70 @@
+@use '../base/variables' as *;
+
+/* =========================================================
+   📊 TABLE COMPONENT
+   ========================================================= */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $color-ui-surface;
+  border-radius: $size-radius-sm;
+  overflow: hidden;
+
+  &__wrapper {
+    overflow-x: auto;
+    background: $color-ui-bg;
+    border-radius: $size-radius-sm;
+  }
+
+  th,
+  td {
+    border: 1px solid rgba($color-ui-text, 0.1);
+    padding: 0.75rem;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  th {
+    background: rgba($color-ui-text, 0.05);
+    font-weight: 600;
+    color: $color-ui-text;
+  }
+
+  td {
+    color: rgba($color-ui-text, 0.8);
+  }
+
+  tr:nth-child(even) {
+    background: rgba($color-ui-muted, 0.05);
+  }
+
+  tr:hover {
+    background: rgba($color-brand-primary, 0.08);
+  }
+
+  &__empty {
+    text-align: center;
+    color: $color-ui-muted;
+    padding: 1rem;
+    font-style: italic;
+  }
+}
+
+/* 🌙 DARK MODE */
+.theme--dark .table {
+  background: $color-ui-surface;
+
+  th {
+    background: rgba($color-ui-text, 0.1);
+    color: $color-ui-text;
+  }
+
+  td {
+    color: rgba($color-ui-text, 0.9);
+  }
+
+  tr:nth-child(even) {
+    background: rgba($color-ui-text, 0.05);
+  }
+}

@@ -1,0 +1,164 @@
+// src/styles/pages/_leaderboard.scss
+// ======================================================
+// 🎮 LEADERBOARD PAGE — Futurista + Gamificado + Heroico
+// Inspiración: Tron Legacy, Discord UI, GitHub Universe
+// ======================================================
+
+@use '../base/variables' as *;
+@use 'sass:color';
+
+.leaderboard {
+  background: $color-ui-bg;
+  padding: 2rem;
+  max-width: 70rem;
+  margin: 0 auto;
+  font-family: $font-family-base;
+  color: $color-ui-text;
+
+  // === TÍTULO PRINCIPAL ===
+  &__title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: $color-brand-primary;
+    letter-spacing: 1px;
+    text-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
+    animation: glow-pulse 2.5s infinite ease-in-out;
+  }
+
+  // === MENSAJE VACÍO ===
+  &__empty {
+    text-align: center;
+    color: $color-ui-muted;
+    font-style: italic;
+    padding: 2rem;
+    background: $color-ui-surface;
+    border: 1px solid $color-ui-border;
+    border-radius: $size-radius-md;
+    box-shadow: 0 0 12px rgba(0, 191, 255, 0.05);
+  }
+
+  // === TABLA PRINCIPAL ===
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgba(0, 191, 255, 0.15);
+    border-radius: $size-radius-md;
+    overflow: hidden;
+    background: $color-ui-surface;
+    box-shadow: 0 0 18px rgba(0, 191, 255, 0.08);
+    backdrop-filter: blur(8px);
+    animation: fade-in 0.8s ease-out;
+
+    th,
+    td {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: $color-ui-text;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background: linear-gradient(
+        to right,
+        rgba(0, 191, 255, 0.15),
+        rgba(0, 191, 255, 0.05)
+      );
+      color: $color-brand-primary;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+    }
+
+    tr {
+      transition: background 0.25s ease, transform 0.25s ease;
+
+      &:nth-child(even) {
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      &:hover {
+        background: rgba(0, 191, 255, 0.1);
+        transform: scale(1.01);
+        box-shadow: 0 0 10px rgba(0, 191, 255, 0.25);
+      }
+    }
+
+    // === POSICIÓN ===
+    .leaderboard__position {
+      font-weight: 700;
+      text-align: center;
+      color: $color-brand-primary;
+      text-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
+    }
+
+    // === USUARIO / AVATAR ===
+    .leaderboard__user {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 500;
+
+      .leaderboard__avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid rgba(0, 191, 255, 0.4);
+        box-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+          transform: scale(1.1);
+          box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
+        }
+      }
+    }
+
+    // === PUNTOS / NIVEL ===
+    .leaderboard__points {
+      font-weight: 700;
+      color: $color-brand-primary;
+      text-shadow: 0 0 8px rgba(0, 191, 255, 0.5);
+    }
+
+    .leaderboard__level {
+      font-weight: 600;
+      color: $color-semantic-success;
+      text-shadow: 0 0 6px rgba(46, 204, 113, 0.4);
+    }
+  }
+
+  // === ERROR (fallback) ===
+  &__error {
+    color: $color-semantic-danger;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 1.5rem;
+  }
+}
+
+// === ANIMACIONES ===
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 8px rgba(0, 191, 255, 0.5),
+      0 0 20px rgba(0, 191, 255, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 18px rgba(0, 191, 255, 0.8),
+      0 0 30px rgba(0, 191, 255, 0.4);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

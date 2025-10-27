@@ -1,0 +1,80 @@
+// src/styles/main.scss
+// ======================================
+// 💅 MAIN.SCSS — PUNTO DE ENTRADA GLOBAL
+// ======================================
+
+// ===== 1. SETTINGS / VARIABLES =====
+// Solo usamos variables; este archivo ya importa los tokens internamente
+@use './base/variables' as *;
+
+// ===== 2. TOOLS =====
+@use './base/mixins' as *;
+
+// ===== 3. GENERIC =====
+@use './base/reset' as *;
+
+// ===== 4. ELEMENTS =====
+@use './base/typography' as *;
+
+// ===== 5. OBJECTS / UTILITIES =====
+@use './base/utilities' as *;
+@use './base/globals' as *;
+
+// ===== 6. COMPONENTS =====
+@use './components/buttons' as *;
+@use './components/cards' as *;
+@use './components/navbar' as *;
+@use './components/avatar' as *;
+@use './components/table' as *;
+
+// ===== 7. PAGES =====
+@use './pages/dashboard' as *;
+@use './pages/profile' as *;
+@use './pages/teams' as *;
+@use './pages/leaderboard' as *;
+@use './pages/statistics' as *;
+@use './pages/badges' as *;
+@use './pages/events' as *;
+@use './pages/rules-points' as *;
+
+// ===== 8. UTILIDADES GLOBALES =====
+.loader {
+  @include flex-center;
+  color: $color-ui-muted;
+  font-size: 1.2rem;
+  min-height: 200px;
+}
+
+.text-center { text-align: center; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+
+.page {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 100vh;
+  background: $color-ui-bg;
+  color: $color-ui-text;
+
+  @include respond('md') {
+    padding: 3rem;
+  }
+}
+
+// ===== 9. RESPONSIVE GLOBAL =====
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .navbar__links {
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,0 +1,17 @@
+@use 'mixins' as *;
+
+// =============================
+// 🧩 UTILIDADES REUTILIZABLES
+// =============================
+
+.u-hidden { display: none !important; }
+.u-flex-center { @include flex-center; }
+.u-text-center { text-align: center; }
+
+.u-mt-1 { margin-top: 4px; }
+.u-mt-2 { margin-top: 8px; }
+.u-mt-3 { margin-top: 16px; }
+
+.u-p-1 { padding: 4px; }
+.u-p-2 { padding: 8px; }
+.u-p-3 { padding: 16px; }
