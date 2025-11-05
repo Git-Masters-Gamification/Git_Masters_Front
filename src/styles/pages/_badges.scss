@@ -1,220 +1,287 @@
 @use "sass:color";
 @use "../base/variables" as *;
-@use "../base/mixins" as *;
 
-/* ============================================================
-   INSIGNIAS — Estilo Futurista + Gamificado + Heroico
-   Inspirado en Tron Legacy / Duolingo XP / GitHub Universe
-   ============================================================ */
+// ======================================================
+// 🏅 BADGES PAGE — Estilo Futurista + Gamificado
+// ======================================================
 
 .badges {
-  padding: 2.5rem;
-  max-width: 1000px;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  color: $color-ui-text;
+  min-height: 100vh;
+  width: 100%;
+  padding: $size-spacing-6;
   font-family: $font-family-base;
-  font-size: $font-size-base;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: background 0.3s ease, color 0.3s ease;
 
-  // ========================
-  // ENCABEZADO
-  // ========================
+  &__container {
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+
+  // -----------------------------
+  // HEADER
+  // -----------------------------
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba($border-color, 0.6);
-    padding-bottom: 0.75rem;
-  }
+    margin-bottom: $size-spacing-5;
 
-  &__title {
-    font-size: 2rem;
-    font-weight: $font-weight-extrabold;
-    color: $color-brand-primary;
-    text-shadow: 0 0 18px rgba($color-brand-primary, 0.45);
-    letter-spacing: 0.4px;
-  }
+    .badges__title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-extrabold;
+      color: var(--color-primary);
+      text-shadow: 0 0 $size-shadow-glow var(--color-glow);
+    }
 
-  &__back {
-    color: $color-brand-primary;
-    text-decoration: none;
-    font-weight: $font-weight-medium;
-    transition: all 0.2s ease;
+    .badges__back {
+      color: var(--color-primary);
+      font-weight: $font-weight-medium;
+      text-decoration: none;
+      transition: color 0.25s ease;
 
-    &:hover {
-      color: $primary-hover;
-      text-shadow: 0 0 10px rgba($color-brand-primary, 0.4);
-      transform: translateY(-2px);
+      &:hover {
+        color: var(--color-accent);
+        text-decoration: underline;
+      }
     }
   }
 
-  // ========================
+  // -----------------------------
   // SECCIONES
-  // ========================
+  // -----------------------------
   &__section {
-    &--user,
+    margin-bottom: 4rem; // reemplazo de $size-spacing-8
+    padding: $size-spacing-5;
+    border: 1px solid var(--color-border);
+    border-radius: $size-radius-md;
+    background: var(--color-surface);
+    box-shadow: 0 0 $size-shadow-card rgba(0, 191, 255, 0.1);
+    transition: all 0.3s ease;
+
+    &--user {
+      border-left: 3px solid var(--color-primary);
+    }
+
     &--all {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      border-left: 3px solid var(--color-accent);
     }
   }
 
   &__subtitle {
-    font-size: 1.25rem;
+    font-size: $font-size-lg;
     font-weight: $font-weight-bold;
-    color: $color-ui-muted;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
+    color: var(--color-primary);
+    margin-bottom: $size-spacing-4;
   }
 
-  // ========================
-  // GRID DE INSIGNIAS
-  // ========================
+  // -----------------------------
+  // LISTAS DE INSIGNIAS
+  // -----------------------------
   &__list {
     display: grid;
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: $size-spacing-4;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
-    &--user,
+    &--user {
+      .badges__item {
+        border-color: var(--color-primary);
+      }
+    }
+
     &--all {
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      .badges__item {
+        border-color: var(--color-accent);
+      }
     }
   }
 
-  // ========================
-  // TARJETAS DE INSIGNIAS
-  // ========================
   &__item {
-    background: $color-ui-surface;
-    border: 1px solid $border-color;
-    border-radius: $radius-md;
-    padding: 1.25rem;
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.05);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 0.5rem;
-    position: relative;
-    overflow: hidden;
-    min-height: 100px;
-    transition: all 0.25s ease;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: $size-radius-md;
+    padding: $size-spacing-4;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 191, 255, 0.05);
 
     &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 20px rgba($color-brand-primary, 0.3);
-      border-color: rgba($color-brand-primary, 0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 0 14px rgba(0, 191, 255, 0.2);
+      background: rgba(0, 191, 255, 0.03);
     }
 
-    // insignia ganada
-    &--earned {
-      background: linear-gradient(
-        145deg,
-        rgba($color-brand-primary, 0.05) 0%,
-        $color-ui-surface 100%
-      );
-      border: 1px solid rgba($color-brand-primary, 0.35);
-      box-shadow: 0 0 25px rgba($color-brand-primary, 0.15);
-
-      &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 5px;
-        border-top-left-radius: $radius-md;
-        border-bottom-left-radius: $radius-md;
-        background: linear-gradient(
-          180deg,
-          $color-brand-primary,
-          color.adjust($color-brand-primary, $lightness: -10%)
-        );
-        box-shadow: 0 0 15px rgba($color-brand-primary, 0.35);
-      }
-
-      &::after {
-        content: "";
-        position: absolute;
-        top: -25%;
-        right: -15%;
-        width: 140%;
-        height: 140%;
-        background: radial-gradient(
-          circle at 30% 30%,
-          rgba($color-brand-primary, 0.08),
-          transparent 60%
-        );
-      }
+    .badges__name {
+      font-size: $font-size-base;
+      font-weight: $font-weight-bold;
+      color: var(--color-primary);
+      margin-bottom: $size-spacing-1;
     }
 
-    // insignia bloqueada / pendiente
-    &--locked {
-      opacity: 0.65;
-      filter: grayscale(100%);
-      border-style: dashed;
+    .badges__description {
+      font-size: $font-size-sm;
+      color: var(--color-text);
+      opacity: 0.85;
+      margin-bottom: $size-spacing-2;
+    }
+
+    .badges__date {
+      font-size: $font-size-sm;
+      color: var(--color-muted);
     }
   }
 
-  // ========================
-  // TEXTO DENTRO DE TARJETAS
-  // ========================
-  &__name {
-    font-size: 1.05rem;
-    font-weight: $font-weight-bold;
-    color: $color-ui-text;
-    text-shadow: 0 0 8px rgba($color-brand-primary, 0.15);
-  }
-
-  &__description {
-    font-size: $font-size-sm;
-    color: $color-ui-muted;
-    line-height: 1.35;
-  }
-
-  &__date {
-    font-size: 0.75rem;
-    color: $color-ui-muted;
-    opacity: 0.8;
-    margin-top: 0.25rem;
-  }
-
-  // ========================
-  // ESTADOS / VACÍO / ERROR
-  // ========================
+  // -----------------------------
+  // ESTADOS
+  // -----------------------------
+  &__info,
+  &__error,
+  &__warning,
   &__empty {
+    font-size: $font-size-base;
     text-align: center;
-    font-style: italic;
-    color: $color-ui-muted;
-    opacity: 0.85;
+    margin-top: $size-spacing-3;
+  }
+
+  &__info {
+    color: var(--color-primary);
   }
 
   &__error {
-    color: $color-semantic-danger;
-    text-align: center;
-    font-weight: $font-weight-bold;
+    color: var(--color-danger);
   }
 
-  // ========================
-  // RESPONSIVE
-  // ========================
-  @media (max-width: $breakpoint-sm) {
-    padding: 1.25rem;
-    gap: 1.25rem;
+  &__warning {
+    color: var(--color-warning);
+  }
 
-    &__title {
-      font-size: 1.6rem;
+  &__empty {
+    color: var(--color-muted);
+  }
+}
+
+// ======================================================
+// 🌗 MODO OSCURO — Estilo Heroico + Neón Azul
+// ======================================================
+
+[data-theme="dark"] .badges {
+  color: #e6edf3;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 191, 255, 0.05), transparent 25%),
+    linear-gradient(180deg, #0b0f16 0%, #0a0d12 100%);
+
+  &__header {
+    .badges__title {
+      color: #00bfff;
+      text-shadow: 0 0 16px rgba(0, 191, 255, 0.7);
     }
 
-    &__list {
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    .badges__back {
+      color: #00bfff;
+      &:hover {
+        color: #4cc9ff;
+      }
+    }
+  }
+
+  &__section {
+    background: #161b22;
+    border-color: #2d333b;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+
+    &--user {
+      border-left-color: #00bfff;
     }
 
-    &__item {
-      padding: 0.9rem;
-      min-height: 80px;
+    &--all {
+      border-left-color: #4cc9ff;
     }
+  }
+
+  &__item {
+    background: #1f252d;
+    border-color: #2d333b;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.1);
+
+    &:hover {
+      background: rgba(0, 191, 255, 0.08);
+      box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+    }
+
+    .badges__name {
+      color: #00bfff;
+    }
+
+    .badges__description {
+      color: #e6edf3;
+    }
+
+    .badges__date {
+      color: #9ba3b0;
+    }
+  }
+
+  &__error {
+    color: #ef4444;
+  }
+
+  &__warning {
+    color: #facc15;
+  }
+
+  &__empty {
+    color: #9ba3b0;
+  }
+}
+
+// ======================================================
+// 🌞 MODO CLARO — equilibrado, sin romper contraste
+// ======================================================
+
+[data-theme="light"] .badges {
+  background: #f9fafb;
+  color: #111827;
+
+  &__section {
+    background: #ffffff;
+    border-color: #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  &__title {
+    color: #007acc;
+  }
+
+  &__item {
+    background: #ffffff;
+    border-color: #e5e7eb;
+
+    &:hover {
+      background: rgba(0, 191, 255, 0.08);
+    }
+
+    .badges__name {
+      color: #007acc;
+    }
+
+    .badges__description {
+      color: #111827;
+    }
+
+    .badges__date {
+      color: #6b7280;
+    }
+  }
+
+  &__empty {
+    color: #6b7280;
+  }
+
+  &__back {
+    color: #007acc;
   }
 }

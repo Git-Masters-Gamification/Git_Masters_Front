@@ -1,34 +1,41 @@
-// src/modules/auth/pages/Login.jsx
 // ======================================================
-// Login.jsx — Página de inicio de sesión con GitHub
+// src/modules/auth/pages/Login.jsx
+// Página de inicio de sesión con GitHub + soporte modo oscuro
+// Mantiene AuthContext, initTheme y estructura original
 // ======================================================
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../../context/AuthContext";
+import { initTheme } from "../../../utils/theme"; // Inicializa el tema según localStorage
 import "../../../styles/pages/_login.scss";
 import imagen from "../../../assets/imagen.png";
 
 export default function Login() {
   const { login } = useContext(AuthContext);
 
+  // 🧠 Inicializa el tema guardado (dark/light) al montar el componente
+  useEffect(() => {
+    initTheme(); // ← se asegura de aplicar el tema al cargar la página
+  }, []);
+
   return (
     <main className="login">
       <section className="login__container">
 
-        {/* Logo principal (img real, estilado desde SCSS) */}
+        {/* 🧩 Logo principal */}
         <img
           src={imagen}
           alt="Logo de Git Masters"
           className="login__logo"
         />
 
-        {/* Título */}
+        {/* 🏷️ Título y subtítulo */}
         <h1 className="login__title">Git Masters</h1>
         <p className="login__subtitle">
           Inicia sesión con tu cuenta de GitHub
         </p>
 
-        {/* Botón de inicio de sesión */}
+        {/* 🔐 Botón principal de inicio de sesión */}
         <button
           className="login__button"
           onClick={login}

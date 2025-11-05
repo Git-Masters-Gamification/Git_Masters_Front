@@ -4,21 +4,102 @@
 
 @use 'variables' as *;
 
+/* ---------------------------------------------------------
+   Transiciones globales para cambio de tema
+   - Animamos solo las propiedades que son seguras/performantes:
+     background-color, color, border-color, box-shadow, text-shadow, filter, opacity
+   - Respetamos prefers-reduced-motion
+   --------------------------------------------------------- */
+:root,
+html,
 body {
-  background-color: $color-ui-bg;
-  color: $color-ui-text;
-  font-family: $font-family-base;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  /* Duración principal de transición (sin contar el "flash") */
+  --theme-transition-duration: 0.55s;
+  --theme-transition-ease: cubic-bezier(.2,.9,.2,1);
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: $color-ui-surface;
-    color: $color-ui-text;
+/* Reduce motion: desactivar animaciones/overlays */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --theme-transition-duration: 0s;
   }
 }
 
-// Layout global
+/* Aplicamos transiciones en elementos clave */
+html,
+body,
+.container,
+.section,
+.navbar,
+.card,
+button,
+input,
+textarea,
+select {
+  transition-property: background-color, color, border-color, box-shadow, text-shadow, filter, opacity;
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--theme-transition-ease);
+}
+
+/* Optionally a gentle transition for all text nodes (avoid heavy paint) */
+* {
+  /* limit global, keep performant */
+  transition: color var(--theme-transition-duration) var(--theme-transition-ease);
+  /* Evitar aplicar transitions pesadas a elementos que afectan layout */
+}
+
+/* ======================================================
+   Efecto visual "pulso / flash neón" al cambiar el tema
+   - Se dispara cuando se añade la clase `theme--transitioning` al <html>.
+   - Usa un ::before fijo que se desvanece rápidamente.
+   - Se respeta prefers-reduced-motion para accesibilidad.
+   ====================================================== */
+html.theme--transitioning::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  /* usa la variable --color-primary si existe, fallback a azul neón */
+  background: radial-gradient(circle at center,
+    rgba(0,191,255,0.18) 0%,
+    rgba(0,191,255,0.08) 20%,
+    transparent 60%);
+  animation: theme-flash var(--theme-transition-duration) var(--theme-transition-ease) forwards;
+  mix-blend-mode: screen;
+}
+
+@keyframes theme-flash {
+  from { opacity: 1; transform: scale(1); }
+  30%  { opacity: 0.9; transform: scale(1.01); }
+  to   { opacity: 0; transform: scale(1.03); }
+}
+
+/* No animation overlay for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html.theme--transitioning::before { display: none; animation: none; }
+}
+
+/* =====================
+   Body defaults
+   ===================== */
+body {
+  background-color: var(--color-bg, #ffffff);
+  color: var(--color-text, #111827);
+  font-family: $font-family-base;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Compatibilidad con prefers-color-scheme (fallback inicial) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--color-surface, #0b0e14);
+    color: var(--color-text, #e0e6ed);
+  }
+}
+
+/* Layout global */
 .container {
   width: min(90%, 1200px);
   margin-inline: auto;
@@ -26,4 +107,10 @@ body {
 
 .section {
   padding-block: $size-spacing-5;
+}
+
+/* Pequeño helper para elementos que deban "resaltar" durante la transición */
+.is-theme-highlight {
+  transition: box-shadow var(--theme-transition-duration) var(--theme-transition-ease),
+              transform var(--theme-transition-duration) var(--theme-transition-ease);
 }

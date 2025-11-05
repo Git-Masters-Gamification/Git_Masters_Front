@@ -3,34 +3,38 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-/*
-  Teams page styles
-  - Coherente con _dashboard.scss
-  - Usa tokens desde src/styles/base/_variables.scss
-  - Estética: futurista / gamificado / heroico (neón azul, glow sutil)
-*/
+/* ==========================================================
+   🧩 TEAMS PAGE — Futurista / Gamificado / Heroico
+   Inspiración: Tron Legacy / GitHub Universe / Discord UI
+   Tokens: usa src/styles/base/_variables.scss
+   ========================================================== */
 
-/* Page wrapper (keeps existing BEM .page--teams usage) */
+/* ===========================================
+   📦 CONTENEDOR GLOBAL DE LA PÁGINA
+   =========================================== */
 .page--teams {
-  padding: 2rem;
-  color: $color-ui-text;
+  padding: $size-spacing-6;
+  color: var(--color-text);
   font-family: $font-family-base;
-  background: transparent;
+  background: var(--color-bg);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Main teams block (BEM .teams used by the page) */
+/* ===========================================
+   🧭 BLOQUE PRINCIPAL (.teams)
+   =========================================== */
 .teams {
   &__title {
     text-align: center;
-    font-size: 2rem;
+    font-size: $font-size-xl;
     font-weight: $font-weight-extrabold;
-    color: $color-brand-primary;
-    margin-bottom: 1.75rem;
-    text-shadow: 0 0 10px rgba($color-brand-primary, 0.3);
+    color: var(--color-primary);
+    margin-bottom: $size-spacing-5;
+    text-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.5);
   }
 
   &__form {
-    margin-bottom: 1.75rem;
+    margin-bottom: $size-spacing-5;
     display: flex;
     justify-content: center;
   }
@@ -38,68 +42,65 @@
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: $size-spacing-4;
   }
 
   &__error {
-    color: $color-danger;
+    color: var(--color-danger);
     text-align: center;
     font-weight: $font-weight-medium;
   }
 }
 
-/* ===========================
-   TeamForm (override tailwind-ish classes in JSX safely)
-   =========================== */
+/* ===========================================
+   🧱 FORMULARIO DE EQUIPOS
+   =========================================== */
 .team-form {
   width: 100%;
   max-width: 680px;
-  background: $card-bg;
+  background: var(--color-surface);
   padding: $size-spacing-5;
   border-radius: $radius-md;
-  box-shadow: $size-shadow-card;
-  border: 1px solid $border-color;
-  color: $color-ui-text;
+  box-shadow: 0 0 $size-shadow-card rgba(0, 191, 255, 0.08);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  transition: all 0.3s ease;
 
-  &__title,
-  & .team-form__title {
-    margin: 0 0 $size-spacing-3 0;
+  &__title {
+    margin-bottom: $size-spacing-3;
     font-size: $font-size-lg;
     font-weight: $font-weight-medium;
-    color: $color-ui-text;
+    color: var(--color-text);
   }
 
-  &__input,
-  & .team-form__input {
+  &__input {
     width: 100%;
     padding: $size-spacing-2;
     border-radius: $radius-sm;
-    border: 1px solid rgba($border-color, 0.9);
-    background: color.adjust($card-bg, $lightness: 4%); /* subtle separation */
-    color: $color-ui-text;
+    border: 1px solid var(--color-border);
+    background: color.adjust($card-bg, $lightness: 4%);
+    color: var(--color-text);
     font-size: $font-size-base;
     outline: none;
-    transition: box-shadow 0.14s ease, border-color 0.14s ease, transform 0.12s ease;
+    transition: all 0.2s ease;
 
     &:focus {
       box-shadow: 0 0 10px rgba($color-brand-primary, 0.14);
-      border-color: $color-brand-primary;
+      border-color: var(--color-primary);
     }
 
     &::placeholder {
-      color: $color-ui-muted;
+      color: var(--color-muted);
     }
   }
 
-  &__error,
-  & .team-form__error {
-    margin: $size-spacing-2 0 0 0;
+  &__error {
+    margin-top: $size-spacing-2;
     font-size: $font-size-sm;
-    color: $color-danger;
+    color: var(--color-danger);
   }
 
-  &__button,
-  & .team-form__button {
+  &__button {
     width: 100%;
     padding: $size-spacing-3 0;
     border-radius: $radius-sm;
@@ -107,10 +108,10 @@
     cursor: pointer;
     font-weight: $font-weight-medium;
     font-size: $font-size-base;
-    color: $color-ui-bg;
-    background: $color-brand-primary;
-    box-shadow: 0 6px 18px rgba($color-brand-primary, 0.12);
-    transition: transform 0.12s ease, box-shadow 0.18s ease, filter 0.12s ease;
+    color: var(--color-bg);
+    background: var(--color-primary);
+    box-shadow: 0 6px 18px rgba(0, 191, 255, 0.12);
+    transition: all 0.25s ease;
 
     &[disabled] {
       opacity: 0.6;
@@ -121,92 +122,83 @@
 
     &:not([disabled]):hover,
     &:not([disabled]):focus {
-      background: $primary-hover;
+      background: var(--color-primary-hover);
       transform: translateY(-2px);
-      box-shadow: 0 10px 26px rgba($color-brand-primary, 0.18);
+      box-shadow: 0 10px 26px rgba(0, 191, 255, 0.18);
     }
   }
 }
 
-/* ===========================
-   TeamList & items
-   =========================== */
+/* ===========================================
+   🧑‍🤝‍🧑 LISTA DE EQUIPOS
+   =========================================== */
 .team-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.875rem;
+  gap: $size-spacing-3;
   width: 100%;
 
-  &__empty,
-  .team-list__empty {
+  &__empty {
     text-align: center;
-    color: $color-ui-muted;
+    color: var(--color-muted);
     font-size: $font-size-base;
     padding: $size-spacing-3;
   }
 
-  &__item,
-  .team-list__item {
+  &__item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: $size-spacing-3;
     padding: $size-spacing-3;
     border-radius: $radius-md;
-    background: $card-bg;
-    border: 1px solid $border-color;
-    box-shadow: $size-shadow-card;
-    transition: transform 0.12s ease, box-shadow 0.18s ease, border-color 0.14s ease;
-    min-height: 64px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 0 $size-shadow-card rgba(0, 191, 255, 0.08);
+    transition: all 0.25s ease;
 
     &:hover {
-      transform: translateY(-4px);
-      box-shadow: $size-shadow-card, $size-shadow-glow;
-      border-color: rgba($color-brand-primary, 0.14);
+      transform: translateY(-3px);
+      box-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.25);
+      border-color: rgba($color-brand-primary, 0.2);
     }
 
-    /* info block (left) */
-    & .team-list__info,
     .team-list__info {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: $size-spacing-2;
       flex: 1 1 auto;
       min-width: 0;
     }
 
-    & .team-list__name,
     .team-list__name {
       font-weight: $font-weight-medium;
-      color: $color-brand-primary;
+      color: var(--color-primary);
       text-decoration: none;
-      font-size: 1rem;
+      font-size: $font-size-base;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: calc(100% - 120px);
     }
 
-    & .team-list__members,
     .team-list__members {
-      color: $color-ui-muted;
+      color: var(--color-muted);
       font-size: $font-size-sm;
     }
 
-    /* action button (right) */
-    & .team-list__button,
     .team-list__button {
       padding: $size-spacing-2 $size-spacing-3;
       border-radius: $radius-sm;
       border: none;
       cursor: pointer;
       font-weight: $font-weight-medium;
-      color: $color-ui-bg;
-      background: $color-brand-primary;
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
-      box-shadow: 0 6px 16px rgba($color-brand-primary, 0.12);
+      color: var(--color-bg);
+      background: var(--color-primary);
+      box-shadow: 0 6px 16px rgba(0, 191, 255, 0.12);
+      transition: all 0.25s ease;
 
       &[disabled] {
         opacity: 0.65;
@@ -216,132 +208,127 @@
       }
 
       &:not([disabled]):hover {
-        background: $primary-hover;
+        background: var(--color-primary-hover);
         transform: translateY(-2px);
-        box-shadow: 0 10px 26px rgba($color-brand-primary, 0.18);
+        box-shadow: 0 10px 26px rgba(0, 191, 255, 0.18);
       }
     }
   }
 }
 
-/* ===========================
-   TeamMembers (list + avatar)
-   =========================== */
+/* ===========================================
+   👤 TEAM MEMBERS (LISTADO INTERNO)
+   =========================================== */
 .team-members {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: $size-spacing-2;
 
-  &__item,
-  .team-members__item {
+  &__item {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem;
+    gap: $size-spacing-2;
+    padding: $size-spacing-2;
     border-radius: $radius-sm;
-    color: $color-ui-text;
-  }
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.25s ease;
 
-  &__avatar,
-  .team-members__avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 999px;
-    object-fit: cover;
-    border: 1px solid $border-color;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-  }
-
-  &__name,
-  .team-members__name {
-    font-weight: $font-weight-medium;
-    color: $color-ui-text;
-    font-size: $font-size-base;
-  }
-
-  &__points,
-  .team-members__points {
-    color: $color-ui-muted;
-    font-size: $font-size-sm;
-    margin-left: auto;
-  }
-
-  &__empty,
-  .team-members__empty {
-    color: $color-ui-muted;
-    font-style: italic;
-  }
-}
-
-/* ===========================
-   Team detail page (minimal styling to match theme)
-   =========================== */
-.team-detail {
-  &__title {
-    font-size: 1.75rem;
-    font-weight: $font-weight-extrabold;
-    color: $color-brand-primary;
-    margin-bottom: $size-spacing-3;
-    text-shadow: 0 0 10px rgba($color-brand-primary, 0.14);
-  }
-
-  &__actions {
-    display: flex;
-    gap: $size-spacing-3;
-    margin-top: $size-spacing-3;
-
-    & .team-detail__leave,
-    .team-detail__leave {
-      background: $color-danger;
-      color: $color-ui-bg;
-      padding: $size-spacing-2 $size-spacing-3;
-      border-radius: $radius-sm;
-      border: none;
-      cursor: pointer;
-
-      &:hover {
-        background: color.adjust($color-danger, $lightness: -6%);
-      }
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.2);
     }
 
-    & .team-detail__back,
-    .team-detail__back {
-      background: transparent;
-      color: $color-ui-text;
-      padding: $size-spacing-2 $size-spacing-3;
-      border-radius: $radius-sm;
-      border: 1px solid $border-color;
-      cursor: pointer;
+    .team-members__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: $font-weight-bold;
+      color: var(--color-bg);
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.4);
+    }
 
-      &:hover {
-        background: color.adjust($card-bg, $lightness: 6%);
-      }
+    .team-members__name {
+      color: var(--color-text);
+      font-weight: $font-weight-medium;
+      font-size: $font-size-base;
+    }
+
+    .team-members__role {
+      color: var(--color-muted);
+      font-size: $font-size-sm;
     }
   }
 }
 
-/* ===========================
-   Responsive tweaks
-   =========================== */
-@media (max-width: $breakpoint-sm) {
+/* ===========================================================
+   🌑 OVERRIDES RUNTIME — ACTIVOS CON html.theme--dark
+   =========================================================== */
+html.theme--dark {
   .page--teams {
-    padding: 1rem;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(#00BFFF, 0.08), transparent 25%),
+      radial-gradient(circle at 80% 80%, rgba(#FF9F59, 0.05), transparent 25%),
+      linear-gradient(180deg, #0D1117 0%, color.adjust(#0D1117, $lightness: 3%) 100%);
+    color: #E6EDF3;
   }
 
-  .team-form {
-    padding: $size-spacing-4;
+  .team-form,
+  .team-list__item,
+  .team-members__item {
+    background: #161B22;
+    border-color: #30363D;
+    color: #E6EDF3;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
   }
 
-  .team-list__item {
-    flex-direction: column;
-    align-items: stretch;
+  .teams__title,
+  .team-list__name {
+    color: #00BFFF;
+    text-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.7);
+  }
 
-    .team-list__button {
-      width: 100%;
-      margin-top: $size-spacing-2;
+  .team-list__members,
+  .team-members__role {
+    color: #9BA3B0;
+  }
+
+  .team-form__input {
+    background: #1C222A;
+    border-color: #30363D;
+    color: #E6EDF3;
+
+    &::placeholder {
+      color: #9BA3B0;
     }
+
+    &:focus {
+      border-color: #00BFFF;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.2);
+    }
+  }
+
+  .team-form__button,
+  .team-list__button {
+    background: linear-gradient(90deg, #29C7FF, #00BFFF);
+    color: #0D1117;
+    box-shadow: 0 6px 20px rgba(#00BFFF, 0.25);
+
+    &:hover {
+      box-shadow: 0 18px 36px rgba(#00BFFF, 0.35);
+    }
+  }
+
+  .team-members__avatar {
+    background: linear-gradient(135deg, #29C7FF, #00BFFF);
+    box-shadow: 0 0 12px rgba(#00BFFF, 0.5);
   }
 }

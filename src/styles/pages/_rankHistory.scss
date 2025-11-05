@@ -1,0 +1,232 @@
+@use 'sass:color';
+@use '../base/variables' as *;
+
+// ======================================================
+// 🏆 Rank History Page — Estilo Futurista + Gamificado
+// ======================================================
+
+.rank-history {
+  min-height: 100vh;
+  width: 100%;
+  padding: $size-spacing-6;
+  font-family: $font-family-base;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: background 0.3s ease, color 0.3s ease;
+
+  // -----------------------------
+  // HEADER
+  // -----------------------------
+  &__header {
+    text-align: center;
+    margin-bottom: $size-spacing-6;
+
+    h1 {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-extrabold;
+      color: var(--color-primary);
+      text-shadow: 0 0 $size-shadow-glow var(--color-glow);
+      margin-bottom: $size-spacing-2;
+    }
+
+    p {
+      font-size: $font-size-base;
+      color: var(--color-muted);
+      max-width: 40rem;
+      margin: 0 auto;
+    }
+  }
+
+  // -----------------------------
+  // TABLA
+  // -----------------------------
+  &__table-container {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: $size-radius-md;
+    padding: $size-spacing-5;
+    box-shadow: 0 0 $size-shadow-card rgba(0, 191, 255, 0.1);
+    overflow-x: auto;
+    transition: all 0.3s ease;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: $font-size-base;
+      color: inherit;
+
+      thead {
+        background: rgba(0, 0, 0, 0.04); // ✅ Reemplazo seguro del color.adjust()
+        th {
+          text-align: left;
+          padding: $size-spacing-2 $size-spacing-3;
+          font-weight: $font-weight-bold;
+          color: var(--color-primary);
+          border-bottom: 1px solid var(--color-border);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      tbody {
+        tr {
+          transition: background 0.25s ease;
+
+          &:nth-child(even) {
+            background: rgba(0, 0, 0, 0.02);
+          }
+
+          &:hover {
+            background: rgba(0, 191, 255, 0.05);
+          }
+
+          td {
+            padding: $size-spacing-2 $size-spacing-3;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text);
+
+            &.rank-up {
+              color: var(--color-success);
+              font-weight: $font-weight-medium;
+            }
+
+            &.rank-down {
+              color: var(--color-danger);
+              font-weight: $font-weight-medium;
+            }
+
+            &.rank-same {
+              color: var(--color-muted);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // -----------------------------
+  // ESTADOS
+  // -----------------------------
+  &__loading,
+  &__error,
+  &__empty {
+    text-align: center;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    margin-top: $size-spacing-6;
+  }
+
+  &__loading {
+    color: var(--color-primary);
+    text-shadow: 0 0 $size-shadow-glow var(--color-glow);
+  }
+
+  &__error {
+    color: var(--color-danger);
+  }
+
+  &__empty {
+    color: var(--color-muted);
+  }
+}
+
+// ======================================================
+// 🌗 MODO OSCURO — Estilo Heroico + Neón Azul
+// ======================================================
+
+[data-theme='dark'] .rank-history {
+  color: #E6EDF3;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 191, 255, 0.05), transparent 25%),
+    linear-gradient(180deg, #0B0F16 0%, #0A0D12 100%);
+
+  &__header {
+    h1 {
+      color: #00BFFF;
+      text-shadow: 0 0 16px rgba(0, 191, 255, 0.7);
+    }
+    p { color: #9BA3B0; }
+  }
+
+  &__table-container {
+    background: #161B22;
+    border-color: #2D333B;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+
+    table {
+      thead {
+        background: #1F252D;
+        th {
+          color: #00BFFF;
+          border-bottom-color: #2D333B;
+        }
+      }
+
+      tbody tr {
+        &:nth-child(even) {
+          background: rgba(255, 255, 255, 0.03);
+        }
+
+        &:hover {
+          background: rgba(0, 191, 255, 0.08);
+        }
+
+        td {
+          border-bottom-color: rgba(255, 255, 255, 0.06);
+          color: #E6EDF3;
+
+          &.rank-up { color: #10b981; }
+          &.rank-down { color: #ef4444; }
+          &.rank-same { color: #9BA3B0; }
+        }
+      }
+    }
+  }
+
+  &__loading {
+    color: #00BFFF;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
+  }
+
+  &__error { color: #ef4444; }
+  &__empty { color: #9BA3B0; }
+}
+
+// ======================================================
+// 🌞 MODO CLARO — equilibrado, sin romper contraste
+// ======================================================
+
+[data-theme='light'] .rank-history {
+  background: #f9fafb;
+  color: #111827;
+
+  &__table-container {
+    background: #ffffff;
+    border-color: #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    thead {
+      background: #f3f4f6;
+      th {
+        color: #0070cc;
+      }
+    }
+
+    tbody tr {
+      &:hover {
+        background: rgba(0, 191, 255, 0.08);
+      }
+
+      td {
+        color: #111827;
+
+        &.rank-up { color: #16a34a; }
+        &.rank-down { color: #dc2626; }
+        &.rank-same { color: #6b7280; }
+      }
+    }
+  }
+
+  &__header h1 { color: #007ACC; }
+  &__header p { color: #6b7280; }
+}

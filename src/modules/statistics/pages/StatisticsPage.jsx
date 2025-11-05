@@ -1,70 +1,90 @@
-// src/modules/statistics/pages/StatisticsPage.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import PointsSummary from "../components/PointsSummary";
 import ActivityBreakdown from "../components/ActivityBreakdown";
 import useStatisticsData from "../hooks/useStatisticsData";
 import Loader from "../../../components/Loader";
+import { initTheme } from "../../../utils/theme";
+import "../../../styles/pages/_statistics.scss";
 
 const StatisticsPage = () => {
   const { stats, loading, error } = useStatisticsData();
 
-  if (loading) return <Loader />;
-  if (error)
-    return <p className="text-center mt-10 text-red-500">{error}</p>;
+  useEffect(() => {
+    try {
+      initTheme();
+    } catch (e) {
+      console.warn("initTheme fallback (no disponible)", e);
+    }
+  }, []);
 
-  const { pointsLast7Days, mostValuableActivity, activityBreakdown } = stats || {};
+  if (loading) return <Loader />;
+
+  if (error)
+    return (
+      <p className="statistics__error text-center mt-10" role="alert">
+        {error}
+      </p>
+    );
+
+  const {
+    pointsLast7Days = 0,
+    mostValuableActivity = null,
+    activityBreakdown = [],
+  } = stats || {};
 
   return (
-    <div className="page page--statistics statistics p-8 max-w-4xl mx-auto space-y-6">
-      <h1 className="statistics__title text-3xl font-bold text-gray-800 text-center mb-8">
-        Estadísticas personales
-      </h1>
+    <div className="page page--statistics statistics">
+      <h1 className="statistics__title">Estadísticas personales</h1>
 
       <section className="statistics__summary">
-        <PointsSummary stats={stats} />
+        <PointsSummary stats={stats} className="statistics__points-summary" />
       </section>
 
       <section className="statistics__breakdown">
-        <ActivityBreakdown breakdown={stats?.activityBreakdown} />
+        <ActivityBreakdown
+          breakdown={activityBreakdown}
+          className="statistics__activity-breakdown"
+        />
       </section>
 
-      {/* === BLOQUE DE DEBUG VISUAL === */}
-      <div className="statistics__debug mt-6 bg-gray-900 p-6 rounded-xl shadow-md border border-gray-700 text-gray-100">
-        <h2 className="text-lg font-semibold mb-4 text-sky-400">
-          Datos completos
-        </h2>
+      <div
+        className="statistics__debug"
+        aria-hidden={!!activityBreakdown?.length}
+      >
+        <h2>Datos completos</h2>
 
-        <div className="space-y-3">
-          <div className="p-3 bg-gray-800 rounded-lg">
-            <p className="text-sm text-gray-400">Puntos últimos 7 días:</p>
-            <p className={`text-2xl font-bold ${pointsLast7Days >= 0 ? "text-green-400" : "text-red-400"}`}>
+        <div className="statistics__debug-list">
+          <div className="statistics__debug-item">
+            <div className="debug-label">Puntos últimos 7 días:</div>
+            <div
+              className={`debug-value ${
+                pointsLast7Days >= 0
+                  ? "debug-value--positive"
+                  : "debug-value--negative"
+              }`}
+            >
               {pointsLast7Days}
-            </p>
+            </div>
           </div>
 
           {mostValuableActivity && (
-            <div className="p-3 bg-gray-800 rounded-lg">
-              <p className="text-sm text-gray-400">Actividad más valiosa:</p>
-              <p className="text-lg font-semibold text-sky-300">
-                {mostValuableActivity.rule}
-              </p>
-              <p className="text-sm text-gray-400">
-                +{mostValuableActivity.totalPoints} puntos
-              </p>
+            <div className="statistics__debug-item">
+              <div className="debug-label">Actividad más valiosa:</div>
+              <div className="debug-text">{mostValuableActivity.rule}</div>
+              <div className="debug-sub">
+                +{mostValuableActivity.totalPoints ?? 0} puntos
+              </div>
             </div>
           )}
 
-          {activityBreakdown && activityBreakdown.length > 0 && (
-            <div className="p-3 bg-gray-800 rounded-lg">
-              <p className="text-sm text-gray-400 mb-2">Desglose de actividad: </p>
-              <ul className="space-y-2">
+          {activityBreakdown?.length > 0 && (
+            <div className="statistics__debug-item">
+              <div className="debug-label">Desglose de actividad:</div>
+              <ul className="debug-list">
                 {activityBreakdown.map((item) => (
-                  <li
-                    key={item.type}
-                    className="flex justify-between text-gray-300 border-b border-gray-700 pb-1"
-                  >
-                    <span className="capitalize">{item.type}</span>
-                    <span className="font-semibold">{item.count}</span>
+                  <li key={item.type} className="debug-list-item">
+                    <span className="debug-item-type">{item.type}</span>
+                    <span className="debug-item-count">{item.count ?? 0}</span>
                   </li>
                 ))}
               </ul>

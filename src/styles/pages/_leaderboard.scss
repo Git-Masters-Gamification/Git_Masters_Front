@@ -1,19 +1,55 @@
 // src/styles/pages/_leaderboard.scss
 // ======================================================
 // 🎮 LEADERBOARD PAGE — Futurista + Gamificado + Heroico
-// Inspiración: Tron Legacy, Discord UI, GitHub Universe
+// — Ajustes de contraste y legibilidad para encabezados
 // ======================================================
 
 @use '../base/variables' as *;
 @use 'sass:color';
 
+/* -------------- RUNTIME THEME FALLBACK / SAFETY -------------- */
+html.theme--dark {
+  --color-bg: #0D1117;
+  --color-surface: #161B22;
+  --color-text: #E6EDF3;
+  --color-muted: #9BA3B0;
+  --color-border: #30363D;
+  --color-primary: #00BFFF;
+  --color-primary-hover: #29C7FF;
+  --color-accent: #FF9F59;
+  --color-success: #10B981;
+  --color-glow: rgba(0, 191, 255, 0.25);
+  /* fallback RGB explícito (compatible con todos los compiladores SASS) */
+  --color-primary-rgb: 0, 191, 255;
+}
+
+/* Aseguramos que existan variables (fallback con tokens SCSS si no están presentes) */
+:root {
+  --color-bg: #{$color-ui-bg};
+  --color-surface: #{$color-ui-surface};
+  --color-text: #{$color-ui-text};
+  --color-muted: #{$color-ui-muted};
+  --color-border: #{$color-ui-border};
+  --color-primary: #{$color-brand-primary};
+  --color-primary-hover: #{$color-brand-primary-hover};
+  --color-accent: #{$color-brand-accent};
+  --color-success: #{$color-semantic-success};
+  --color-glow: #{$color-ui-glow};
+  /* Fallback RGB: si quieres derivarlo del token SCSS automáticamente
+     puedo cambiar esto más adelante usando funciones red()/green()/blue()
+     con la sintaxis correcta; por ahora usamos un valor seguro */
+  --color-primary-rgb: 0, 191, 255;
+}
+
+/* =================== PAGE STYLES (USANDO VARIABLES RUNTIME) =================== */
 .leaderboard {
-  background: $color-ui-bg;
+  background: var(--color-bg);
   padding: 2rem;
   max-width: 70rem;
   margin: 0 auto;
   font-family: $font-family-base;
-  color: $color-ui-text;
+  color: var(--color-text);
+  transition: background 0.25s ease, color 0.25s ease;
 
   // === TÍTULO PRINCIPAL ===
   &__title {
@@ -21,20 +57,20 @@
     font-weight: 800;
     text-align: center;
     margin-bottom: 2rem;
-    color: $color-brand-primary;
+    color: var(--color-primary);
     letter-spacing: 1px;
-    text-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
+    text-shadow: 0 0 15px var(--color-glow);
     animation: glow-pulse 2.5s infinite ease-in-out;
   }
 
   // === MENSAJE VACÍO ===
   &__empty {
     text-align: center;
-    color: $color-ui-muted;
+    color: var(--color-muted);
     font-style: italic;
     padding: 2rem;
-    background: $color-ui-surface;
-    border: 1px solid $color-ui-border;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: $size-radius-md;
     box-shadow: 0 0 12px rgba(0, 191, 255, 0.05);
   }
@@ -42,48 +78,77 @@
   // === TABLA PRINCIPAL ===
   &__table {
     width: 100%;
-    border-collapse: collapse;
-    border: 1px solid rgba(0, 191, 255, 0.15);
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid rgba(0, 191, 255, 0.06);
     border-radius: $size-radius-md;
     overflow: hidden;
-    background: $color-ui-surface;
-    box-shadow: 0 0 18px rgba(0, 191, 255, 0.08);
-    backdrop-filter: blur(8px);
+    background: var(--color-surface);
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(6px);
     animation: fade-in 0.8s ease-out;
 
     th,
     td {
       padding: 1rem 1.25rem;
       text-align: left;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      color: $color-ui-text;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      color: var(--color-text);
       font-size: 0.95rem;
+      vertical-align: middle;
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
-    th {
-      background: linear-gradient(
-        to right,
-        rgba(0, 191, 255, 0.15),
-        rgba(0, 191, 255, 0.05)
-      );
-      color: $color-brand-primary;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      border-bottom: 1px solid rgba(0, 191, 255, 0.2);
-    }
+    /* ========== HEADER (mejor contraste / legibilidad) ========== */
+    thead {
+      th {
+        position: relative;
+        z-index: 2;
+        /* gradiente más oscuro + brillo izquierdo sutil */
+        background: linear-gradient(
+          90deg,
+          rgba(var(--color-primary-rgb), 0.14) 0%,
+          rgba(0, 0, 0, 0.30) 60%
+        );
+        color: var(--color-text); /* importante: legible */
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        border-bottom: 1px solid var(--color-border);
+        padding: 1rem 1.4rem;
+        backdrop-filter: blur(4px);
 
-    tr {
-      transition: background 0.25s ease, transform 0.25s ease;
+        /* sombra interna para separar del body */
+        box-shadow: inset 0 -12px 30px rgba(0, 0, 0, 0.45);
 
-      &:nth-child(even) {
-        background: rgba(255, 255, 255, 0.02);
+        &:first-child {
+          border-top-left-radius: $size-radius-md;
+        }
+        &:last-child {
+          border-top-right-radius: $size-radius-md;
+        }
+
+        .__head-accent {
+          color: var(--color-primary);
+          text-shadow: 0 0 8px var(--color-glow);
+        }
       }
+    }
 
-      &:hover {
-        background: rgba(0, 191, 255, 0.1);
-        transform: scale(1.01);
-        box-shadow: 0 0 10px rgba(0, 191, 255, 0.25);
+    tbody {
+      tr {
+        transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        background: transparent;
+
+        &:nth-child(even) {
+          background: rgba(255, 255, 255, 0.02);
+        }
+
+        &:hover {
+          background: rgba(0, 191, 255, 0.045);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(0, 191, 255, 0.06);
+        }
       }
     }
 
@@ -91,8 +156,9 @@
     .leaderboard__position {
       font-weight: 700;
       text-align: center;
-      color: $color-brand-primary;
-      text-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
+      color: var(--color-primary);
+      text-shadow: 0 0 6px var(--color-glow);
+      width: 64px;
     }
 
     // === USUARIO / AVATAR ===
@@ -106,28 +172,32 @@
         width: 36px;
         height: 36px;
         border-radius: 50%;
-        border: 2px solid rgba(0, 191, 255, 0.4);
-        box-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 2px solid rgba(var(--color-primary-rgb), 0.30);
+        box-shadow: 0 0 8px rgba(var(--color-primary-rgb), 0.12);
+        transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.25s ease;
+        object-fit: cover;
+      }
 
-        &:hover {
-          transform: scale(1.1);
-          box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
-        }
+      .leaderboard__username {
+        color: var(--color-text);
       }
     }
 
     // === PUNTOS / NIVEL ===
     .leaderboard__points {
       font-weight: 700;
-      color: $color-brand-primary;
-      text-shadow: 0 0 8px rgba(0, 191, 255, 0.5);
+      color: var(--color-primary);
+      text-shadow: 0 0 8px var(--color-glow);
+      text-align: center;
+      width: 140px;
     }
 
     .leaderboard__level {
       font-weight: 600;
-      color: $color-semantic-success;
-      text-shadow: 0 0 6px rgba(46, 204, 113, 0.4);
+      color: var(--color-success);
+      text-shadow: 0 0 6px rgba(46, 204, 113, 0.12);
+      text-align: center;
+      width: 120px;
     }
   }
 
@@ -140,15 +210,38 @@
   }
 }
 
-// === ANIMACIONES ===
+/* =================== SMALL SCREENS =================== */
+@media (max-width: $breakpoint-md) {
+  .leaderboard {
+    padding: 1rem;
+
+    &__title {
+      font-size: 1.6rem;
+    }
+
+    &__table th,
+    &__table td {
+      padding: 0.75rem 0.9rem;
+      font-size: 0.9rem;
+    }
+
+    .leaderboard__position,
+    .leaderboard__points,
+    .leaderboard__level {
+      width: auto;
+      text-align: right;
+    }
+  }
+}
+
+/* =================== ANIMATIONS =================== */
 @keyframes glow-pulse {
-  0%, 100% {
-    text-shadow: 0 0 8px rgba(0, 191, 255, 0.5),
-      0 0 20px rgba(0, 191, 255, 0.2);
+  0%,
+  100% {
+    text-shadow: 0 0 8px var(--color-glow), 0 0 20px rgba(0, 191, 255, 0.12);
   }
   50% {
-    text-shadow: 0 0 18px rgba(0, 191, 255, 0.8),
-      0 0 30px rgba(0, 191, 255, 0.4);
+    text-shadow: 0 0 18px var(--color-glow), 0 0 30px rgba(0, 191, 255, 0.22);
   }
 }
 

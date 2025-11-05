@@ -1,6 +1,8 @@
 // src/styles/base/_variables.scss
+// ------------------------------------------------------
 // -> Mapea los tokens generados (Style Dictionary) a nombres "amigables"
-// -> Usar `!default` permite sobreescribir desde otros archivos si hace falta.
+// -> Usa `!default` para permitir sobreescritura si hace falta
+// ------------------------------------------------------
 
 @use '../tokens/build/scss/_tokens' as tokens;
 
@@ -138,3 +140,42 @@ $error: $error-color !default;
 
 /* Border default (fix temporal) */
 $border-color: $color-ui-border !default;
+
+// =====================================================
+// 🌗 SOPORTE DE MODO OSCURO — Sistema de temas dinámico
+// =====================================================
+
+// Variables CSS generadas a partir de los tokens SCSS
+:root,
+[data-theme='light'] {
+  --color-bg: #{$color-ui-bg};
+  --color-surface: #{$color-ui-surface};
+  --color-text: #{$color-ui-text};
+  --color-muted: #{$color-ui-muted};
+  --color-border: #{$color-ui-border};
+  --color-primary: #{$color-brand-primary};
+  --color-primary-hover: #{$color-brand-primary-hover};
+  --color-accent: #{$color-brand-accent};
+  --color-success: #{$color-semantic-success};
+  --color-warning: #{$color-semantic-warning};
+  --color-danger: #{$color-semantic-danger};
+  --color-glow: #{$color-ui-glow};
+}
+
+// =====================================================
+// 🌙 MODO OSCURO — Overrides visuales
+// =====================================================
+[data-theme='dark'] {
+  --color-bg: #0b0e14;
+  --color-surface: #12161c;
+  --color-text: #e0e6ed;
+  --color-muted: #9ba3b0;
+  --color-border: #1f2530;
+  --color-primary: #00bfff;
+  --color-primary-hover: #29c7ff;
+  --color-accent: #00b7ff;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-glow: rgba(0, 191, 255, 0.25);
+}

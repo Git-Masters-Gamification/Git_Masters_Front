@@ -21,6 +21,9 @@ const EventDetailPage = React.lazy(() => import('../modules/events/pages/EventDe
 const RulesPointsPage = React.lazy(() => import('../modules/rules-points/pages/RulesPointsPage'));
 const RankingsPage = React.lazy(() => import('../modules/rankings/pages/RankingsPage'));
 
+// ✅ Nuevo módulo — RankHistory
+const RankHistoryPage = React.lazy(() => import('../modules/rankHistory/pages/RankHistoryPage'));
+
 // Simple 404 component inline
 function NotFound() {
   return <div style={{ padding: 24 }}>404 — Página no encontrada</div>;
@@ -28,7 +31,6 @@ function NotFound() {
 
 export default function AppRoutes() {
   return (
-    // Suspense aquí cubre todas las rutas lazy; Loader es fallback mínimo
     <Suspense fallback={<Loader message="Cargando..." />}>
       <Routes>
         {/* root */}
@@ -38,7 +40,7 @@ export default function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
 
-        {/* protected (wrapping individual elements keeps control por ruta) */}
+        {/* protected */}
         <Route
           path="/dashboard"
           element={
@@ -132,6 +134,16 @@ export default function AppRoutes() {
           element={
             <ProtectedRoute>
               <RankingsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ✅ Nueva ruta protegida — Historial de Rangos */}
+        <Route
+          path="/rank-history"
+          element={
+            <ProtectedRoute>
+              <RankHistoryPage />
             </ProtectedRoute>
           }
         />

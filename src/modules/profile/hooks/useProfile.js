@@ -1,4 +1,8 @@
-// src/modules/profile/hooks/useProfile.js
+// ======================================================
+// 🎯 useProfile Hook — Perfil + Actividad + Historial
+// (Versión compatible con sistema de niveles progresivos)
+// ======================================================
+
 import { useEffect, useState, useRef, useCallback } from 'react';
 import api from '../../../services/api';
 import API from '../../../services/endpoints';
@@ -20,7 +24,10 @@ export default function useProfile(refreshDependency) {
         withRetry(() => api.get(API.PROFILE.ACTIVITY), 2, 800),
         withRetry(() => api.get(API.PROFILE.POINTS_HISTORY), 2, 800),
       ]);
+
       if (!mounted.current) return;
+
+      // ✅ Backend ya entrega: points, level, progressPercent, rank {name, color}
       setProfile(pRes.data);
       setActivity(aRes.data || []);
       setPointsHistory(phRes.data || []);
