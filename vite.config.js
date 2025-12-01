@@ -11,6 +11,15 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [react()],
+  
+  // --- AQUI ESTA EL UNICO CAMBIO NECESARIO ---
+  server: {
+    host: true,          // Necesario para que Docker exponga la IP
+    port: 5173,          // Fija el puerto
+    allowedHosts: true,  // ESTO SOLUCIONA EL ERROR DE NGROK
+  },
+  // -------------------------------------------
+
   test: {
     projects: [{
       extends: true,
