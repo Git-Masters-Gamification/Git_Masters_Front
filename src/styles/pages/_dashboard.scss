@@ -1,105 +1,157 @@
-// src/styles/pages/_dashboard.scss
+@use 'sass:color';
 @use '../base/variables' as *;
-@use '../base/mixins' as *;
 
-// ===========================
-// DASHBOARD (Ajustado a tokens existentes)
-// ===========================
+/* ===================================================
+   ESTRUCTURA GLOBAL — asegura que el fondo se adapte
+   =================================================== */
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg); // se adapta al tema activo
+  color: var(--color-text);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--color-bg);
+}
+
+/* ===================================================
+   DASHBOARD — Base (modo claro + soporte modo oscuro)
+   =================================================== */
 
 .dashboard {
-  padding: 2rem;
-  color: $color-ui-text; // ← variable existente
+  min-height: 100vh;
+  width: 100%;
+  padding: $size-spacing-6;
   font-family: $font-family-base;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  transition: background 0.3s ease, color 0.3s ease;
 
+  // === HEADER ===
   &__header {
-    margin-bottom: 2rem;
+    margin-bottom: $size-spacing-5;
     text-align: center;
 
     .dashboard__title {
-      font-size: 2rem;
-      font-weight: 700;
-      color: $color-brand-primary; // ← tu brand token
-      text-shadow: 0 0 12px rgba(0, 191, 255, 0.4);
+      font-size: $font-size-xl;
+      font-weight: $font-weight-extrabold;
+      color: var(--color-primary);
+      text-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.5);
     }
 
     .dashboard__subtitle {
-      color: $color-ui-muted;
-      font-size: 1rem;
-      margin-top: 0.25rem;
+      color: var(--color-muted);
+      font-size: $font-size-base;
+      margin-top: $size-spacing-1;
     }
   }
 
-  // === Resumen superior (XP Stats) ===
+  // === RESUMEN ===
   &__summary {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
     justify-content: center;
-    margin-bottom: 2rem;
+    gap: $size-spacing-4;
+    margin-bottom: $size-spacing-5;
 
     .dashboard__item {
-      background: $color-ui-surface;
-      border: 1px solid $border-color;
-      border-radius: var(--radius);
-      padding: 1rem 1.5rem;
-      flex: 1 1 200px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: $size-radius-md;
+      padding: $size-spacing-3 $size-spacing-4;
       text-align: center;
-      font-weight: 600;
-      color: $color-ui-text;
-      box-shadow: 0 0 8px rgba(0, 191, 255, 0.05);
+      font-weight: $font-weight-medium;
+      color: inherit;
+      box-shadow: 0 0 $size-shadow-card rgba(var(--color-primary), 0.08);
       transition: all 0.3s ease;
+      flex: 1 1 220px;
 
       strong {
-        color: $color-brand-primary;
-        text-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
+        color: var(--color-primary);
+        text-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.4);
       }
 
       &:hover {
-        box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
         transform: translateY(-3px);
+        box-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.3);
       }
     }
   }
 
-  // === Estadísticas recientes ===
+  // === ESTADÍSTICAS ===
   &__stats {
-    background: $color-ui-surface;
-    border: 1px solid $border-color;
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 0 12px rgba(0, 191, 255, 0.05);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: $size-radius-md;
+    padding: $size-spacing-5;
+    box-shadow: 0 0 $size-shadow-card rgba(0, 191, 255, 0.08);
+    margin-bottom: $size-spacing-5;
 
     &-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: $color-brand-primary;
-      margin-bottom: 1rem;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-bold;
+      color: var(--color-primary);
+      margin-bottom: $size-spacing-3;
     }
 
-    &-content {
-      white-space: pre-wrap;
-      background: $color-ui-bg;
-      color: $color-ui-muted;
-      padding: 1rem;
-      border-radius: var(--radius);
-      border: 1px solid rgba(0, 191, 255, 0.12);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
-      box-shadow: inset 0 0 8px rgba(0, 191, 255, 0.06);
+    &-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $size-spacing-3;
+      justify-content: center;
+
+      .dashboard__stat-card {
+        background: var(--color-bg);
+        border: 1px solid rgba(0, 191, 255, 0.1);
+        border-radius: $size-radius-md;
+        padding: $size-spacing-3;
+        text-align: center;
+        min-width: 200px;
+        transition: all 0.3s ease;
+
+        .dashboard__stat-label {
+          color: var(--color-muted);
+          font-size: $font-size-sm;
+          margin-bottom: $size-spacing-1;
+        }
+
+        .dashboard__stat-value {
+          color: inherit;
+          font-weight: $font-weight-bold;
+          font-size: $font-size-lg;
+
+          &.neon {
+            color: var(--color-primary);
+            text-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.5);
+          }
+        }
+
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 0 $size-shadow-card rgba(0, 191, 255, 0.25);
+        }
+      }
     }
   }
 
-  // === Navegación rápida ===
+  // === NAVEGACIÓN RÁPIDA ===
   &__nav {
-    margin-bottom: 2.5rem;
+    margin-bottom: $size-spacing-6;
     text-align: center;
 
     &-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: $color-brand-primary;
-      margin-bottom: 1rem;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-bold;
+      color: var(--color-primary);
+      margin-bottom: $size-spacing-3;
     }
 
     &-list {
@@ -108,66 +160,115 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1rem;
+      gap: $size-spacing-3;
 
-      .dashboard__nav-item {
-        a {
-          color: $color-brand-primary;
-          font-weight: 500;
-          text-decoration: none;
-          transition: all 0.25s ease;
+      .dashboard__nav-item a {
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: $font-weight-medium;
+        transition: all 0.25s ease;
 
-          &:hover {
-            color: $color-brand-primary; // kept same; brand hover token may not exist
-            text-shadow: 0 0 8px rgba(0, 191, 255, 0.4);
-          }
+        &:hover {
+          text-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.4);
+          transform: translateY(-2px);
         }
       }
     }
   }
 
-  // === Botones / Acciones ===
+  // === BOTONES DE ACCIÓN ===
   &__actions {
     text-align: center;
 
     .dashboard__refresh-btn {
-      background: $color-brand-primary;
-      color: $color-ui-bg; // botón claro sobre azul
+      background: var(--color-primary);
+      color: var(--color-bg);
       border: none;
-      border-radius: var(--radius);
-      padding: 0.75rem 1.5rem;
-      font-weight: 600;
+      border-radius: $size-radius-md;
+      padding: $size-spacing-3 $size-spacing-4;
+      font-weight: $font-weight-bold;
       cursor: pointer;
-      box-shadow: 0 0 12px rgba(0, 191, 255, 0.3);
-      transition: all 0.25s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 $size-shadow-card rgba(0, 191, 255, 0.3);
 
       &:hover {
-        // si tienes token brand-hover, úsalo. si no, se queda igual
-        background: $color-brand-primary;
-        box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+        background: var(--color-primary-hover);
+        box-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.6);
         transform: scale(1.03);
       }
 
       &:active {
-        background: $color-brand-primary;
+        transform: scale(0.98);
       }
     }
   }
+}
 
-  // === Reintento (cuando hay error) ===
-  &__retry-btn {
-    background: $color-brand-primary;
-    color: $color-ui-bg;
-    padding: 0.5rem 1.25rem;
-    border-radius: var(--radius);
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
-    transition: all 0.25s ease;
+/* ===========================================================
+   🌑 OVERRIDES RUNTIME — ACTIVOS CON html.theme--dark
+   =========================================================== */
+html.theme--dark {
+  body,
+  #root {
+    /* fondo general oscuro — visible incluso fuera del dashboard */
+    background: linear-gradient(180deg, #0D1117 0%, color.adjust(#0D1117, $lightness: 3%) 100%);
+  }
 
-    &:hover {
-      background: $color-brand-primary;
-      box-shadow: 0 0 18px rgba(0, 191, 255, 0.5);
+  .dashboard {
+    background:
+      radial-gradient(circle at 20% 20%, rgba(#00BFFF, 0.08), transparent 25%),
+      radial-gradient(circle at 80% 80%, rgba(#FF9F59, 0.05), transparent 25%),
+      linear-gradient(180deg, #0D1117 0%, color.adjust(#0D1117, $lightness: 3%) 100%);
+    color: #E6EDF3;
+
+    .dashboard__item,
+    .dashboard__stats,
+    .dashboard__stat-card {
+      background: #161B22;
+      border-color: #30363D;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+      color: #E6EDF3;
+    }
+
+    .dashboard__title {
+      color: #00BFFF;
+      text-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.7);
+    }
+
+    .dashboard__subtitle,
+    .dashboard__stat-label {
+      color: #9BA3B0;
+    }
+
+    .dashboard__stat-value {
+      color: #E6EDF3;
+
+      &.neon {
+        color: #00BFFF;
+      }
+    }
+
+    .dashboard__item strong {
+      color: #00BFFF;
+      text-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.5);
+    }
+
+    .dashboard__nav-item a {
+      color: #00BFFF;
+
+      &:hover {
+        text-shadow: 0 0 $size-shadow-glow rgba(0, 191, 255, 0.7);
+      }
+    }
+
+    .dashboard__refresh-btn {
+      background: linear-gradient(90deg, #29C7FF, #00BFFF);
+      color: #0D1117;
+      box-shadow: 0 6px 20px rgba(0, 191, 255, 0.25);
+
+      &:hover {
+        box-shadow: 0 18px 36px rgba(0, 191, 255, 0.35);
+      }
     }
   }
 }

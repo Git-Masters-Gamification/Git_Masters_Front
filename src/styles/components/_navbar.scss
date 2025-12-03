@@ -1,205 +1,264 @@
 @use '../base/variables' as *;
 
 /* =========================================================
-   🧭 NAVBAR COMPONENT
+   🧭 NAVBAR COMPONENT — Futurista + Gamificado
+   Mejora toggle (luna/sol), botón logout y orden de links
    ========================================================= */
 
 .navbar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: $color-ui-surface;
-  border-bottom: 1px solid rgba($color-ui-text, 0.1);
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 1rem;
+  gap: 1rem;
+  background: var(--color-surface, $color-ui-surface);
+  border-bottom: 1px solid rgba($color-ui-border, 0.08);
   font-family: $font-family-base;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color var(--theme-transition-duration) var(--theme-transition-ease),
+    color var(--theme-transition-duration) var(--theme-transition-ease),
+    border-color var(--theme-transition-duration) var(--theme-transition-ease),
+    box-shadow calc(var(--theme-transition-duration) * 0.9) var(--theme-transition-ease);
 
+  /* BRAND */
   &__brand {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: $color-ui-text;
-    text-decoration: none;
-    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 
-    &:hover {
-      color: $color-brand-primary;
+    .navbar__logo {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--color-primary, $color-brand-primary);
+      text-decoration: none;
+      transition: color 0.28s ease, text-shadow 0.28s ease, transform 0.28s ease;
+
+      &:hover {
+        text-shadow: 0 0 12px rgba(0,191,255,0.55);
+        transform: translateY(-1px);
+      }
     }
   }
 
+  /* LINKS */
   &__links {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.9rem;
+    flex: 1;
+    justify-content: center;
 
     a {
-      color: $color-ui-text;
-      font-weight: 500;
-      transition: color 0.2s ease;
+      color: var(--color-primary, $color-brand-primary);
+      font-weight: 600;
+      padding: 0.25rem 0.35rem;
+      border-radius: 6px;
+      transition: color 0.28s ease, text-shadow 0.28s ease, transform 0.28s ease, background-color 0.28s ease;
 
       &:hover {
-        color: $color-brand-primary;
+        text-shadow: 0 0 10px rgba(0,191,255,0.55);
+        transform: translateY(-2px);
+        background: rgba(0,191,255,0.03);
       }
+    }
+
+    /* Rank History highlight style (más visible, después de leaderboard) */
+    .navbar__link--highlight {
+      background: linear-gradient(90deg, rgba(0,191,255,0.08), rgba(41,199,255,0.04));
+      border: 1px solid rgba(0,191,255,0.12);
+      padding: 0.2rem 0.45rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 18px rgba(0,191,255,0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--color-primary, $color-brand-primary);
     }
 
     &.is-open {
       display: flex;
       flex-direction: column;
+      gap: 0.5rem;
+      padding: 0.6rem;
+      align-items: center;
     }
   }
 
-  &__toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: $color-ui-text;
-    cursor: pointer;
-  }
-
-  &__user {
+  /* ACTIONS (theme toggle + user) */
+  &__actions {
     display: flex;
     align-items: center;
+    gap: 0.6rem;
+    margin-left: auto;
+  }
+
+  /* THEME TOGGLE — SOL / LUNA */
+  &__theme-toggle {
+    position: relative;
+    width: 48px;
+    height: 30px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,191,255,0.18);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background-color 0.35s ease, transform 0.25s ease, box-shadow 0.35s ease;
+    box-shadow: 0 0 6px rgba(0,191,255,0.06);
+
+    .icon {
+      position: absolute;
+      font-size: 16px;
+      line-height: 1;
+      transition: transform 0.42s cubic-bezier(.2,.9,.2,1), opacity 0.28s ease, filter 0.28s ease;
+      filter: drop-shadow(0 0 6px rgba(0,191,255,0.12));
+      pointer-events: none;
+    }
+    .icon--sun { left: 10px; top: 7px; }
+    .icon--moon { right: 10px; top: 7px; opacity: 0; transform: translateY(-6px) scale(0.9); }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(0,191,255,0.12);
+    }
+  }
+
+  /* cuando el HTML tiene theme--dark, mostrar luna (icon--moon) */
+  .theme--dark & {
+    .navbar__theme-toggle {
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.08));
+      border-color: rgba(0,191,255,0.22);
+      .icon--sun { opacity: 0; transform: translateY(6px) scale(0.9); }
+      .icon--moon { opacity: 1; transform: translateY(0) scale(1.05); }
+    }
+  }
+
+  /* cuando el HTML tiene theme--light, mostrar sol */
+  .theme--light & {
+    .navbar__theme-toggle {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-color: rgba(0,191,255,0.12);
+      .icon--sun { opacity: 1; transform: translateY(0) scale(1.05); }
+      .icon--moon { opacity: 0; transform: translateY(-6px) scale(0.9); }
+    }
+  }
+
+  /* USER area */
+  &__user {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .navbar__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+    border: 1px solid rgba(0,191,255,0.16);
+  }
+  .navbar__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .avatar--initial {
+    font-weight: 700;
+    color: var(--color-primary, $color-brand-primary);
+  }
+
+  .navbar__name {
+    font-weight: 600;
+    color: var(--color-primary, $color-brand-primary);
+    max-width: 140px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* LOGOUT — botón mejorado */
+  .navbar__logout {
+    display: inline-flex;
+    align-items: center;
     gap: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0,191,255,0.18);
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+    color: var(--color-primary, $color-brand-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background calc(var(--theme-transition-duration) * 0.9) var(--theme-transition-ease),
+      color 0.28s ease,
+      box-shadow calc(var(--theme-transition-duration) * 0.9) var(--theme-transition-ease),
+      transform 0.18s ease;
+  }
 
-    &-avatar img {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-    }
+  .navbar__logout .logout__icon {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+  .navbar__logout .logout__text { font-size: 0.95rem; }
 
-    &-name {
-      font-weight: 500;
-      color: $color-ui-text;
-    }
+  .navbar__logout:hover {
+    background: linear-gradient(90deg, rgba(0,191,255,0.085), rgba(41,199,255,0.03));
+    box-shadow: 0 8px 26px rgba(0,191,255,0.12);
+    transform: translateY(-3px);
+    border-color: rgba(0,191,255,0.28);
+  }
 
-    &-logout {
-      border: 1px solid rgba($color-ui-text, 0.2);
-      border-radius: $size-radius-sm;
-      padding: 0.25rem 0.5rem;
-      background: transparent;
-      color: $color-ui-text;
-      cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease;
-
-      &:hover {
-        background: rgba($color-ui-muted, 0.08);
-        color: $color-brand-primary;
-      }
-    }
+  /* Mobile adjustments */
+  @media (max-width: 920px) {
+    &__links { justify-content: flex-start; gap: 0.6rem; }
+    .navbar__actions { gap: 0.4rem; }
+    .navbar__name { display: none; } /* ahorrar espacio en móvil */
   }
 
   @media (max-width: 768px) {
-    &__toggle {
-      display: block;
-    }
-
-    &__links {
-      display: none;
-
-      &.is-open {
-        display: flex;
-        position: absolute;
-        top: 3.5rem;
-        left: 0;
-        width: 100%;
-        background: $color-ui-surface;
-        border-top: 1px solid rgba($color-ui-text, 0.1);
-        padding: 1rem 0.5rem;
-        flex-direction: column;
-        align-items: center;
-      }
+    padding: 0.45rem 0.75rem;
+    &__links { display: none; }
+    &__links.is-open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 3.6rem;
+      left: 0;
+      width: 100%;
+      background: var(--color-surface, $color-ui-surface);
+      border-top: 1px solid rgba($color-ui-border, 0.08);
+      padding: 0.8rem 0.6rem;
+      z-index: 40;
     }
   }
 }
 
-/* =========================================================
-   🌙 DARK MODE
-   ========================================================= */
-.theme--dark .navbar {
-  background: #0d1117; // Fondo oscuro profundo
-  border-color: rgba(255, 255, 255, 0.1);
-
-  a {
-    color: #f8fafc;
+/* THEMES: small explicit overrides for focus colors and accessibility */
+.theme--dark {
+  .navbar {
+    .navbar__logout { border-color: rgba(0,191,255,0.36); }
   }
-
-  .navbar__brand {
-    color: #38bdf8; // Azul neón
-  }
-
-  .navbar__toggle {
-    color: #f8fafc;
-  }
-
-  .navbar__user-name {
-    color: #f8fafc;
-  }
-
-  .navbar__user-logout {
-    color: #f8fafc;
-    border-color: rgba(255, 255, 255, 0.2);
-
-    &:hover {
-      background: rgba(56, 189, 248, 0.1);
-      color: #38bdf8;
-    }
-  }
-
-  .navbar__links.is-open {
-    background: #111827; // tono más claro que el fondo principal
+}
+.theme--light {
+  .navbar {
+    .navbar__logout { border-color: rgba(0,191,255,0.18); }
   }
 }
 
-/* =========================================================
-   ☀️ LIGHT MODE
-   ========================================================= */
-.theme--light .navbar {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.05);
-
-  a {
-    color: #111827;
-  }
-
-  .navbar__brand {
-    color: #2563eb; // Azul principal claro
-  }
-
-  .navbar__toggle {
-    color: #111827;
-  }
-
-  .navbar__user-name {
-    color: #111827;
-  }
-
-  .navbar__user-logout {
-    color: #111827;
-    border-color: rgba(0, 0, 0, 0.1);
-
-    &:hover {
-      background: rgba(37, 99, 235, 0.1);
-      color: #2563eb;
-    }
-  }
-
-  .navbar__links.is-open {
-    background: #f9fafb;
-  }
+/* small utility */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
-
-/* =========================================================
-   VARIABLES COMPLEMENTARIAS (no definidas en tokens)
-   ========================================================= */
-
-// Fondo de superficie UI (tarjetas, navbar, modales, etc.)
-$color-ui-surface: #ffffff !default;
-$color-ui-muted: #6c757d !default;
-
-// Fuente base global
-$font-family-base: 'Inter', 'Segoe UI', Roboto, sans-serif !default;
-
-// Tamaños base
-$size-radius-sm: 4px !default;
-$size-radius-md: 8px !default;
-$size-radius-lg: 12px !default;

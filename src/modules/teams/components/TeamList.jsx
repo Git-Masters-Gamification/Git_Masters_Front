@@ -1,35 +1,9 @@
-import React, { useState, useContext } from "react";
+// src/modules/teams/components/TeamList.jsx
+import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import api from "../../../services/api";
-import API from "../../../services/endpoints";
-import { AuthContext } from "../../../context/AuthContext";
 
-export default function TeamList({ teams, refresh }) {
-  const [loadingId, setLoadingId] = useState(null);
-  const { logout, refresh: refreshAuth } = useContext(AuthContext);
-
-  const join = async (id) => {
-    if (!window.confirm("¿Unirte a este equipo?")) return;
-    setLoadingId(id);
-    try {
-      await api.post(API.TEAMS.JOIN(id));
-      alert("✅ Te uniste al equipo exitosamente");
-      await refresh();
-      await refreshAuth();
-    } catch (err) {
-      const status = err.response?.status;
-      if (status === 400) alert("Solicitud inválida.");
-      else if (status === 401) logout();
-      else if (status === 403) alert("No tienes permisos para unirte.");
-      else if (status === 409)
-        alert(err.response?.data?.message || "Ya perteneces a un equipo.");
-      else alert("Error interno. Intenta nuevamente.");
-    } finally {
-      setLoadingId(null);
-    }
-  };
-
+export default function TeamList({ teams }) {
   if (!teams.length)
     return (
       <p className="team-list__empty text-gray-500 text-center">
@@ -45,25 +19,16 @@ export default function TeamList({ teams, refresh }) {
           className="team-list__item border p-4 rounded-lg flex justify-between items-center"
         >
           <div className="team-list__info">
-            <Link to={`/teams/${t.id}`} className="team-list__name font-medium text-indigo-600">
+            <Link
+              to={`/teams/${t.id}`}
+              className="team-list__name font-medium text-indigo-600 hover:underline"
+            >
               {t.name}
             </Link>
             <span className="team-list__members ml-2 text-sm text-gray-500">
               Miembros: {t._count?.members ?? t.members?.length ?? 0}
             </span>
           </div>
-
-          <button
-            onClick={() => join(t.id)}
-            disabled={loadingId === t.id}
-            className={`team-list__button px-4 py-1 rounded-md text-white ${
-              loadingId === t.id
-                ? "bg-indigo-300 cursor-not-allowed"
-                : "bg-indigo-600 hover:bg-indigo-700"
-            }`}
-          >
-            {loadingId === t.id ? "Uniéndose..." : "Unirse"}
-          </button>
         </li>
       ))}
     </ul>
@@ -81,5 +46,4 @@ TeamList.propTypes = {
       }),
     })
   ).isRequired,
-  refresh: PropTypes.func.isRequired,
 };

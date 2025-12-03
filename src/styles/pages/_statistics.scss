@@ -1,12 +1,8 @@
 // ======================================================
 // 🎮 STATISTICS PAGE — Estilo Futurista + Gamificado
 // ======================================================
-//
-// Inspiración: Tron Legacy + Duolingo XP + Discord UI
-// Sensación: Energía, progreso, recompensa
-// Usa variables y tokens desde base/_variables.scss
-// ======================================================
 
+@use "sass:color";
 @use "../base/variables" as *;
 @use "../base/mixins" as *;
 
@@ -16,163 +12,229 @@
   margin: 0 auto;
   color: $color-ui-text;
   font-family: $font-family-base;
-  text-shadow: 0 0 4px rgba(0, 191, 255, 0.05);
+  transition: background 0.3s ease, color 0.3s ease;
 
   // === Título principal ===
   &__title {
     text-align: center;
     font-size: 2rem;
-    font-weight: $font-weight-bold;
-    color: $color-brand-primary;
-    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+    font-weight: $font-weight-extrabold;
+    color: $color-primary;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.45);
     margin-bottom: 2.5rem;
     letter-spacing: 0.5px;
   }
 
-  // === Sección de resumen de puntos ===
-  &__summary {
-    background: $color-ui-surface;
+  // -------------------------
+  // Points Summary
+  // -------------------------
+  .points-summary {
+    background: $card-bg;
     border: 1px solid $border-color;
     border-radius: $radius-md;
     padding: 1.5rem 2rem;
-    box-shadow: 0 0 12px rgba(0, 191, 255, 0.1);
-    transition: all 0.3s ease;
+    box-shadow: 0 0 12px rgba(0, 191, 255, 0.06);
+    transition: all 0.25s ease;
 
-    &:hover {
-      box-shadow: 0 0 18px rgba(0, 191, 255, 0.25);
-      transform: translateY(-2px);
-    }
-
-    h2 {
+    &__title {
       font-size: 1.3rem;
-      color: $color-brand-primary;
+      color: $color-primary;
       font-weight: $font-weight-bold;
-      margin-bottom: 1.25rem;
       text-align: center;
+      margin-bottom: 1rem;
     }
 
-    .summary-grid {
+    &__grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
+    }
 
-      .summary-item {
-        background: $color-ui-bg;
-        border: 1px solid rgba(0, 191, 255, 0.15);
-        border-radius: $radius-md;
-        text-align: center;
-        padding: 1rem 1.5rem;
-        transition: all 0.3s ease;
-        box-shadow: inset 0 0 6px rgba(0, 191, 255, 0.05);
+    &__item {
+      background: $color-ui-bg;
+      border: 1px solid color.adjust($color-primary, $alpha: -0.88);
+      border-radius: $radius-md;
+      text-align: center;
+      padding: 1rem 1.25rem;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 0 8px rgba(0, 191, 255, 0.03);
 
-        &:hover {
-          border-color: rgba(0, 191, 255, 0.4);
-          box-shadow: 0 0 12px rgba(0, 191, 255, 0.2);
-        }
+      .points-summary__label {
+        font-size: 0.9rem;
+        color: $color-muted;
+      }
 
-        .summary-label {
-          font-size: 0.9rem;
-          color: $color-ui-muted;
-        }
+      .points-summary__value {
+        font-size: 1.75rem;
+        font-weight: $font-weight-extrabold;
+        color: $color-primary;
+        margin-top: 0.5rem;
+      }
 
-        .summary-value {
-          font-size: 1.75rem;
-          font-weight: $font-weight-bold;
-          color: $color-brand-primary;
-          text-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
-        }
+      .points-summary__activity {
+        font-size: 1rem;
+        font-weight: $font-weight-medium;
+        color: inherit;
+      }
 
-        .summary-sub {
-          font-size: 0.95rem;
-          color: $color-ui-muted;
-          margin-top: 0.25rem;
-        }
+      .points-summary__sub {
+        font-size: 0.95rem;
+        color: $color-muted;
+        margin-top: 0.25rem;
+      }
+
+      .points-summary__empty {
+        color: $color-muted;
+        font-style: italic;
       }
     }
   }
 
-  // === Desglose de actividades ===
-  &__breakdown {
-    background: $color-ui-surface;
+  // -------------------------
+  // Activity Breakdown
+  // -------------------------
+  .activity-breakdown {
+    background: $card-bg;
     border: 1px solid $border-color;
     border-radius: $radius-md;
     padding: 1.5rem 2rem;
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.06);
+    transition: all 0.25s ease;
 
-    h2 {
+    &__title {
       font-size: 1.3rem;
       font-weight: $font-weight-bold;
-      color: $color-brand-primary;
+      color: $color-primary;
       margin-bottom: 1rem;
     }
 
-    ul {
+    &__list {
       list-style: none;
       margin: 0;
       padding: 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+    }
 
-      li {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.75rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        color: $color-ui-text;
-        font-size: 0.95rem;
-        transition: color 0.25s ease;
+    &__item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      color: inherit;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      align-items: center;
 
-        &:hover {
-          color: $color-brand-primary;
-        }
+      &:hover {
+        color: $color-primary;
+      }
 
-        span:first-child {
-          text-transform: capitalize;
-          color: $color-ui-muted;
-        }
+      .activity-breakdown__type {
+        text-transform: capitalize;
+        color: $color-muted;
+      }
 
-        span:last-child {
-          font-weight: $font-weight-bold;
-          color: $color-ui-text;
-        }
+      .activity-breakdown__count {
+        font-weight: $font-weight-medium;
+        color: inherit;
       }
     }
 
-    // Estado sin datos
     &--empty {
       text-align: center;
-      color: $color-ui-muted;
+      color: $color-muted;
       padding: 2rem;
       font-style: italic;
     }
   }
 
-  // === Debug / datos crudos ===
+  // -------------------------
+  // Debug / datos crudos
+  // -------------------------
   &__debug {
     background: $color-ui-bg;
-    border: 1px solid rgba(0, 191, 255, 0.12);
+    border: 1px solid rgba($color-primary, 0.12);
     border-radius: $radius-md;
     padding: 1rem 1.25rem;
     font-family: "JetBrains Mono", monospace;
-    color: $color-ui-muted;
-    font-size: 0.85rem;
-    box-shadow: inset 0 0 8px rgba(0, 191, 255, 0.08);
+    color: $color-muted;
+    font-size: 0.9rem;
+    box-shadow: inset 0 0 8px rgba(0, 191, 255, 0.03);
 
     h2 {
-      color: $color-brand-primary;
+      color: $color-primary;
       font-weight: $font-weight-medium;
       margin-bottom: 0.5rem;
     }
 
-    pre {
+    &-list {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    &-item {
       background: $color-ui-surface;
       border-radius: $radius-sm;
       padding: 0.75rem;
-      overflow-x: auto;
-      border: 1px solid rgba(0, 191, 255, 0.08);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .debug-label {
+      font-size: 0.8rem;
+      color: $color-muted;
+      margin-bottom: 0.25rem;
+    }
+
+    .debug-value {
+      font-size: 1.25rem;
+      font-weight: $font-weight-bold;
+      color: inherit;
+    }
+    .debug-value--positive {
+      color: #10b981;
+    }
+    .debug-value--negative {
+      color: #ef4444;
+    }
+
+    .debug-text {
+      color: inherit;
+      font-weight: $font-weight-medium;
+    }
+
+    .debug-sub {
+      color: $color-muted;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+
+    .debug-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .debug-list-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.35rem 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.02);
+      color: inherit;
+    }
+
+    .debug-item-type {
+      text-transform: capitalize;
+      color: $color-muted;
+    }
+
+    .debug-item-count {
+      font-weight: $font-weight-medium;
     }
   }
 
-  // === Adaptabilidad ===
+  // -------------------------
+  // Responsiveness
+  // -------------------------
   @media (max-width: $breakpoint-md) {
     padding: 1rem;
 
@@ -180,10 +242,103 @@
       font-size: 1.5rem;
     }
 
-    &__summary,
-    &__breakdown,
+    .points-summary,
+    .activity-breakdown,
     &__debug {
       padding: 1rem;
     }
   }
+}
+
+/* ======================================================
+   🎨 OVERRIDES RUNTIME — html.theme--dark
+   ====================================================== */
+html.theme--dark {
+  body,
+  #root {
+    background: linear-gradient(180deg, #0D1117 0%, #0a0d12 100%);
+    color: #E6EDF3;
+  }
+
+  .statistics {
+    color: #E6EDF3;
+    background: radial-gradient(circle at 20% 20%, rgba(0, 191, 255, 0.04), transparent 25%),
+                linear-gradient(180deg, #0D1117 0%, #0a0d12 100%);
+
+    .points-summary {
+      background: #161B22;
+      border-color: #30363D;
+      color: #E6EDF3;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+
+      &__item {
+        background: #0f1418;
+        border-color: rgba(255, 255, 255, 0.03);
+        color: #E6EDF3;
+
+        .points-summary__label { color: #9BA3B0; }
+        .points-summary__value {
+          color: $color-primary;
+          text-shadow: 0 0 8px rgba(0, 191, 255, 0.45);
+        }
+        .points-summary__empty { color: #9BA3B0; }
+      }
+    }
+
+    .activity-breakdown {
+      background: #161B22;
+      border-color: #30363D;
+      color: #E6EDF3;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+
+      &__title { color: $color-primary; }
+      &__item {
+        border-bottom-color: rgba(255,255,255,0.03);
+        color: #E6EDF3;
+        .activity-breakdown__type { color: #9BA3B0; }
+      }
+    }
+
+    &__debug {
+      background: #0f1418;
+      border-color: rgba(255,255,255,0.03);
+      color: #9BA3B0;
+
+      .debug-value { color: #E6EDF3; }
+      .debug-value--positive { color: #10b981; }
+      .debug-value--negative { color: #ef4444; }
+    }
+
+    img, .logo, .avatar {
+      background-color: transparent !important;
+    }
+  }
+}
+
+/* ======================================================
+   🩶 FIX — modo oscuro Datos completos (items blancos)
+   ====================================================== */
+html.theme--dark .statistics__debug-item {
+  background: #161B22 !important; // fondo oscuro consistente
+  border-color: #30363D !important;
+  color: #E6EDF3 !important;
+  box-shadow: inset 0 0 8px rgba(0, 191, 255, 0.06);
+}
+
+html.theme--dark .statistics__debug-item .debug-label,
+html.theme--dark .statistics__debug-item .debug-item-type,
+html.theme--dark .statistics__debug-item .debug-sub {
+  color: #9BA3B0 !important;
+}
+
+html.theme--dark .statistics__debug-item .debug-value {
+  color: #E6EDF3 !important;
+}
+
+html.theme--dark .statistics__debug-item .debug-value--positive {
+  color: #10b981 !important;
+}
+
+html.theme--dark .statistics__debug-item .debug-value--negative {
+  color: #ef4444 !important;
 }

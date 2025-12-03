@@ -1,4 +1,5 @@
 // src/services/endpoints.js
+
 const API = {
   AUTH: {
     GITHUB: '/auth/github',
@@ -51,6 +52,18 @@ const API = {
   RANKINGS: {
     LIST: '/rankings',
     TEAM: (id) => `/rankings/${id}`,
+  },
+
+  // 🏆 NUEVO: historial de rangos mensual
+  RANK_HISTORY: {
+    // Obtiene el historial de todos los usuarios (por ejemplo, para dashboard)
+    ALL: '/api/rank-history',
+
+    // Obtiene el historial de un usuario específico
+    USER: (userId) => `/api/rank-history/${userId}`,
+
+    // Opcional: historial por mes y año si lo agregas luego
+    BY_MONTH: (year, month) => `/api/rank-history/${year}/${month}`,
   },
 };
 
